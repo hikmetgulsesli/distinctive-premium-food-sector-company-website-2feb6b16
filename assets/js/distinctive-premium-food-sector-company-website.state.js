@@ -55,9 +55,11 @@
 
     function filteredItems() {
       return state.items.filter(function (item) {
+        var itemName = item.name || '';
+        var itemDescription = item.description || '';
         var matchesSearch = !state.searchQuery ||
-          item.name.toLowerCase().indexOf(state.searchQuery.toLowerCase()) !== -1 ||
-          item.description.toLowerCase().indexOf(state.searchQuery.toLowerCase()) !== -1;
+          itemName.toLowerCase().indexOf(state.searchQuery.toLowerCase()) !== -1 ||
+          itemDescription.toLowerCase().indexOf(state.searchQuery.toLowerCase()) !== -1;
         var matchesCategory = state.categoryFilter === 'All' || item.category === state.categoryFilter;
         var matchesStatus = state.statusFilter === 'All' || item.status === state.statusFilter;
         return matchesSearch && matchesCategory && matchesStatus;

@@ -68,7 +68,7 @@
     if (!prefResult.ok) {
       lastError = lastError || prefResult.error;
       storageStatus = storageStatus === 'loaded' ? 'recovered' : storageStatus;
-      storage.reset();
+      window.localStorage.removeItem(storage.keys.PREFERENCES);
     } else if (prefResult.data) {
       preferences = Object.assign(preferences, prefResult.data);
     }
@@ -104,6 +104,7 @@
     };
 
     render();
+    if (unsubscribe) unsubscribe();
     unsubscribe = state.subscribe(function () {
       render();
     });
@@ -539,7 +540,7 @@
     });
     input.addEventListener('input', function () {
       var patch = {};
-      patch[name] = type === 'number' ? this.value : this.value;
+      patch[name] = type === 'number' ? (this.value === '' ? '' : Number(this.value)) : this.value;
       state.actions.updateEditingItem(patch);
     });
     group.appendChild(lbl);

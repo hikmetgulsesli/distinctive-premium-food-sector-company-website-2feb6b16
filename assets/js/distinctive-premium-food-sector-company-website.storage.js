@@ -7,13 +7,18 @@
     PREFERENCES: PREFIX + 'preferences'
   };
 
+  var _isAvailable;
+
   function isAvailable() {
+    if (_isAvailable !== undefined) return _isAvailable;
     try {
       var testKey = PREFIX + '__test__';
       global.localStorage.setItem(testKey, '1');
       global.localStorage.removeItem(testKey);
+      _isAvailable = true;
       return true;
     } catch (_) {
+      _isAvailable = false;
       return false;
     }
   }
