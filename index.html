@@ -4,16 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Distinctive Premium Food Sector Company Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <main data-setfarm-root="baseline" data-testid="setfarm-app-root" class="app-shell">
-      <section class="hero">
-        <p class="eyebrow">Setfarm Static HTML</p>
-        <h1>Distinctive Premium Food Sector Company Website</h1>
-        <p class="summary">Baseline static page ready for plain HTML, CSS, and JavaScript implementation.</p>
-      </section>
-    </main>
+    <main data-setfarm-root="baseline" data-testid="setfarm-app-root" class="app-shell"></main>
+
+    <script id="fixture-data" type="application/json">
+{"items":[{"id":"item-1","name":"Sourdough Boule","category":"Bakery","price":9.5,"description":"Naturally leavened sourdough with a crackling crust and tender, tangy crumb. Fermented 24 hours.","stock":12,"featured":true,"status":"active","updatedAt":"2026-06-24T10:00:00.000Z"},{"id":"item-2","name":"Smoked Eggplant Mezze","category":"Catering","price":14,"description":"Charred eggplant whipped with tahini, lemon, and garlic, finished with pomegranate molasses.","stock":8,"featured":false,"status":"active","updatedAt":"2026-06-23T14:30:00.000Z"},{"id":"item-3","name":"Fig & Walnut Tart","category":"Bakery","price":28,"description":"Seasonal figs, caramelized walnuts, and frangipane in an all-butter pastry shell.","stock":0,"featured":true,"status":"out_of_stock","updatedAt":"2026-06-22T09:15:00.000Z"},{"id":"item-4","name":"Herb-Crusted Lamb Rack","category":"Catering","price":42,"description":"Frenched lamb rack with rosemary, thyme, and sumac crust, served with root vegetable jus.","stock":5,"featured":false,"status":"active","updatedAt":"2026-06-21T16:45:00.000Z"},{"id":"item-5","name":"Turkish Coffee Brownie","category":"Bakery","price":6,"description":"Dense dark chocolate brownie spiked with cardamom and topped with mocha glaze.","stock":20,"featured":false,"status":"active","updatedAt":"2026-06-20T11:20:00.000Z"}],"categories":["Bakery","Catering","Pantry"],"activity":[{"id":"evt-1","type":"update","message":"Sourdough Boule stock updated","timestamp":"2026-06-24T10:05:00.000Z"},{"id":"evt-2","type":"create","message":"Fig & Walnut Tart added to menu","timestamp":"2026-06-22T09:20:00.000Z"},{"id":"evt-3","type":"error","message":"Inventory sync failed - retry scheduled","timestamp":"2026-06-21T08:00:00.000Z"}],"preferences":{"defaultCategory":"All","sortBy":"updatedAt"}}
+    </script>
+
+    <script src="assets/js/distinctive-premium-food-sector-company-website.storage.js" defer></script>
+    <script src="assets/js/distinctive-premium-food-sector-company-website.state.js" defer></script>
     <script src="assets/js/app.js" defer></script>
     <script src="assets/js/test-bridge.js" defer></script>
   </body>
