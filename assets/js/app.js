@@ -136,8 +136,8 @@
     topNav.appendChild(navLink('Insights', SURFACES.INSIGHTS, s.activeSurface === SURFACES.INSIGHTS, false));
 
     var actions = el('div', { className: 'app-header-actions' });
-    actions.appendChild(iconButton('notifications', 'Notifications', 'ACT_OPEN_NOTIFICATIONS', 'notifications'));
-    actions.appendChild(iconButton('account_circle', 'Account', 'ACT_OPEN_ACCOUNT', 'account'));
+    actions.appendChild(iconButton('notifications', 'Notifications', 'ACT_OPEN_NOTIFICATIONS'));
+    actions.appendChild(iconButton('account_circle', 'Account', 'ACT_OPEN_ACCOUNT'));
 
     header.appendChild(brand);
     header.appendChild(topNav);
@@ -162,7 +162,7 @@
     return a;
   }
 
-  function iconButton(iconName, ariaLabel, actionId, panelName) {
+  function iconButton(iconName, ariaLabel, actionId) {
     var btn = el('button', {
       type: 'button',
       className: 'icon-button',
@@ -171,7 +171,7 @@
     });
     btn.innerHTML = icon(iconName);
     btn.addEventListener('click', function () {
-      state.actions.setActivePanel(panelName || 'notifications');
+      state.actions.setActivePanel('notifications');
     });
     return btn;
   }
@@ -184,9 +184,6 @@
     if (s.lastError) {
       main.appendChild(buildErrorBanner(s.lastError));
     }
-
-    var panel = buildPanel(s);
-    if (panel) main.appendChild(panel);
 
     if (s.activeSurface === SURFACES.OPERATIONS) {
       main.appendChild(buildOperationsSurface(s));
@@ -259,37 +256,6 @@
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
-  }
-
-  function buildPanel(s) {
-    if (s.activePanel !== 'account' && s.activePanel !== 'notifications') return null;
-
-    var panel = el('div', {
-      className: 'insights-panel app-active-panel',
-      'data-testid': 'active-panel-' + s.activePanel,
-      'data-panel-id': s.activePanel
-    });
-
-    var header = el('div', { className: 'surface-toolbar', style: 'margin-bottom:8px;' });
-    var title = el('h2', { className: 'panel-title' }, s.activePanel === 'account' ? 'Account Profile' : 'Notifications');
-    var closeBtn = el('button', {
-      type: 'button',
-      className: 'icon-button',
-      'aria-label': 'Close panel',
-      'data-action-id': 'ACT_CLOSE_PANEL'
-    });
-    closeBtn.innerHTML = icon('cancel');
-    closeBtn.addEventListener('click', function () { state.actions.setActivePanel('list'); });
-    header.appendChild(title);
-    header.appendChild(closeBtn);
-    panel.appendChild(header);
-
-    var bodyText = s.activePanel === 'account'
-      ? 'Manage your account settings and preferences.'
-      : 'No new notifications.';
-    panel.appendChild(el('p', { className: 'insights-hint' }, bodyText));
-
-    return panel;
   }
 
   function buildOperationsSurface(s) {
@@ -378,7 +344,7 @@
     header.appendChild(badge);
 
     var meta = el('div', { className: 'record-meta' });
-    meta.textContent = item.category + ' · $' + item.price.toFixed(2) + ' · Stock ' + item.stock;
+    meta.textContent = item.category + ' · $' + formatPrice(item.price) + ' · Stock ' + formatStock(item.stock);
 
     var actions = el('div', { className: 'record-actions' });
     var editBtn = el('button', {
@@ -419,9 +385,9 @@
       return panel;
     }
     panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
-      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + item.price.toFixed(2) + '</p>' +
+      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + formatPrice(item.price) + '</p>' +
       '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
-      '<p class="preview-stock">Stock: ' + item.stock + '</p>';
+      '<p class="preview-stock">Stock: ' + formatStock(item.stock) + '</p>';
     return panel;
   }
 
@@ -670,6 +636,20 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
+  }
+
+  function formatPrice(value) {
+    if (value === null || value === undefined || value === '') return '0.00';
+    var num = Number(value);
+    if (isNaN(num)) return '0.00';
+    return num.toFixed(2);
+  }
+
+  function formatStock(value) {
+    if (value === null || value === undefined || value === '') return '0';
+    var num = Number(value);
+    if (isNaN(num)) return '0';
+    return String(num);
   }
 
   function escapeHtml(str) {
