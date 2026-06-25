@@ -16,11 +16,10 @@
       global.localStorage.setItem(testKey, '1');
       global.localStorage.removeItem(testKey);
       _isAvailable = true;
-      return true;
     } catch (_) {
       _isAvailable = false;
-      return false;
     }
+    return _isAvailable;
   }
 
   function get(key) {
