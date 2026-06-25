@@ -137,7 +137,9 @@
 
   function render() {
     var s = state.getState();
-    root.innerHTML = '';
+    while (root.firstChild) {
+      root.removeChild(root.firstChild);
+    }
     root.appendChild(buildShell(s));
   }
 
@@ -335,7 +337,7 @@
         state.actions.setCategoryFilter('All');
         state.actions.setStatusFilter('All');
       });
-      empty.innerHTML = '<p>No records match your filters.</p>';
+      empty.appendChild(el('p', {}, 'No records match your filters.'));
       empty.appendChild(retryBtn);
       list.appendChild(empty);
     } else {
@@ -406,13 +408,13 @@
   function buildPreview(item) {
     var panel = el('div', { className: 'item-preview' });
     if (!item) {
-      panel.innerHTML = '<p class="empty-preview">Select an item to preview details.</p>';
+      panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
       return panel;
     }
-    panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
-      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + item.price.toFixed(2) + '</p>' +
-      '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
-      '<p class="preview-stock">Stock: ' + item.stock + '</p>';
+    panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
+    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + item.price.toFixed(2)));
+    panel.appendChild(el('p', { className: 'preview-description' }, item.description));
+    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + item.stock));
     return panel;
   }
 
@@ -515,18 +517,18 @@
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
-    activityPanel.innerHTML = '<h2 class="panel-title">Recent Activity</h2>';
+    activityPanel.appendChild(el('h2', { className: 'panel-title' }, 'Recent Activity'));
     var activityList = el('ul', { className: 'activity-list' });
     (s.activity || []).forEach(function (evt) {
       var li = el('li', { className: 'activity-item' });
-      li.innerHTML = '<span class="activity-type">' + escapeHtml(evt.type) + '</span>' +
-        '<span class="activity-message">' + escapeHtml(evt.message) + '</span>';
+      li.appendChild(el('span', { className: 'activity-type' }, evt.type));
+      li.appendChild(el('span', { className: 'activity-message' }, evt.message));
       activityList.appendChild(li);
     });
     activityPanel.appendChild(activityList);
 
     var stockPanel = el('div', { className: 'insights-panel' });
-    stockPanel.innerHTML = '<h2 class="panel-title">Stock Follow-up</h2>';
+    stockPanel.appendChild(el('h2', { className: 'panel-title' }, 'Stock Follow-up'));
     var reviewBtn = el('button', {
       type: 'button',
       className: 'btn btn-primary',
@@ -666,16 +668,6 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
-  }
-
-  function escapeHtml(str) {
-    if (str === null || str === undefined) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
   }
 
   if (document.readyState === 'loading') {
