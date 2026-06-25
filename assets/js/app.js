@@ -31,34 +31,29 @@
     check: '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
-  var svgParser = new DOMParser();
+  var svgCache = {};
 
-  function svgIcon(name) {
-    var svgText = ICONS[name];
-    if (!svgText) return null;
-    var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
-    var svg = doc.documentElement;
-    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
-    return document.adoptNode(svg);
-  }
-
-  function setIcon(element, name) {
-    clearChildren(element);
-    var svg = svgIcon(name);
-    if (svg) element.appendChild(svg);
-  }
-
-  function setIconAndLabel(element, iconName, label) {
-    clearChildren(element);
-    var svg = svgIcon(iconName);
-    if (svg) element.appendChild(svg);
-    element.appendChild(el('span', {}, label));
-  }
-
-  function clearChildren(element) {
-    while (element.firstChild) {
-      element.removeChild(element.firstChild);
+  function parseSvgIcon(name) {
+    if (svgCache[name]) {
+      return svgCache[name].cloneNode(true);
     }
+    var markup = ICONS[name];
+    if (!markup) return null;
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(markup, 'image/svg+xml');
+    var svg = doc.querySelector('svg');
+    if (!svg) return null;
+    var imported = document.importNode(svg, true);
+    svgCache[name] = imported;
+    return imported.cloneNode(true);
+  }
+
+  function icon(name) {
+    return parseSvgIcon(name);
+  }
+
+  function clearChildren(node) {
+    node.textContent = '';
   }
 
   function readFixtureData() {
@@ -195,7 +190,8 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    setIcon(btn, iconName);
+    var svg = icon(iconName);
+    if (svg) btn.appendChild(svg);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -246,7 +242,9 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      setIconAndLabel(a, link.icon, link.label);
+      var linkIcon = icon(link.icon);
+      if (linkIcon) a.appendChild(linkIcon);
+      a.appendChild(el('span', {}, link.label));
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
@@ -278,7 +276,8 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    setIcon(close, 'cancel');
+    var closeIcon = icon('cancel');
+    if (closeIcon) close.appendChild(closeIcon);
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -294,14 +293,17 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    setIconAndLabel(createBtn, 'add', 'Create New Item');
+    var addIcon = icon('add');
+    if (addIcon) createBtn.appendChild(addIcon);
+    createBtn.appendChild(el('span', {}, 'Create New Item'));
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
     toolbar.appendChild(createBtn);
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    setIcon(searchWrap, 'search');
+    var searchIcon = icon('search');
+    if (searchIcon) searchWrap.appendChild(searchIcon);
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -326,7 +328,6 @@
     var filtered = state.filteredItems();
     if (filtered.length === 0) {
       var empty = el('div', { className: 'empty-state' });
-      var emptyText = el('p', {}, 'No records match your filters.');
       var retryBtn = el('button', {
         type: 'button',
         className: 'btn btn-secondary',
@@ -337,7 +338,7 @@
         state.actions.setCategoryFilter('All');
         state.actions.setStatusFilter('All');
       });
-      empty.appendChild(emptyText);
+      empty.innerHTML = '<p>No records match your filters.</p>';
       empty.appendChild(retryBtn);
       list.appendChild(empty);
     } else {
@@ -389,7 +390,8 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    setIcon(moreBtn, 'more_horiz');
+    var moreIcon = icon('more_horiz');
+    if (moreIcon) moreBtn.appendChild(moreIcon);
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -408,18 +410,13 @@
   function buildPreview(item) {
     var panel = el('div', { className: 'item-preview' });
     if (!item) {
-      var emptyPreview = el('p', { className: 'empty-preview' }, 'Select an item to preview details.');
-      panel.appendChild(emptyPreview);
+      panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
       return panel;
     }
-    var title = el('h2', { className: 'preview-title' }, item.name);
-    var meta = el('p', { className: 'preview-meta' }, item.category + ' · $' + item.price.toFixed(2));
-    var description = el('p', { className: 'preview-description' }, item.description);
-    var stock = el('p', { className: 'preview-stock' }, 'Stock: ' + item.stock);
-    panel.appendChild(title);
-    panel.appendChild(meta);
-    panel.appendChild(description);
-    panel.appendChild(stock);
+    panel.appendChild(el('h2', { className: 'preview-title' }, item.name || ''));
+    panel.appendChild(el('p', { className: 'preview-meta' }, (item.category || '') + ' · $' + formatPrice(item.price)));
+    panel.appendChild(el('p', { className: 'preview-description' }, item.description || ''));
+    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + formatStock(item.stock)));
     return panel;
   }
 
@@ -434,7 +431,8 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    setIcon(backBtn, 'arrow_back');
+    var backIcon = icon('arrow_back');
+    if (backIcon) backBtn.appendChild(backIcon);
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -462,14 +460,18 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    setIconAndLabel(cancelBtn, 'cancel', 'Cancel Edit');
+    var cancelIcon = icon('cancel');
+    if (cancelIcon) cancelBtn.appendChild(cancelIcon);
+    cancelBtn.appendChild(el('span', {}, 'Cancel Edit'));
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
       type: 'submit',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    setIconAndLabel(saveBtn, 'save', 'Save Record');
+    var saveIcon = icon('save');
+    if (saveIcon) saveBtn.appendChild(saveIcon);
+    saveBtn.appendChild(el('span', {}, 'Save Record'));
     var updateImgBtn = el('button', {
       type: 'button',
       className: 'btn btn-text',
@@ -497,14 +499,18 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    setIconAndLabel(filterBtn, 'filter', 'Filter');
+    var filterIcon = icon('filter');
+    if (filterIcon) filterBtn.appendChild(filterIcon);
+    filterBtn.appendChild(el('span', {}, 'Filter'));
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
       type: 'button',
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    setIconAndLabel(exportBtn, 'export', 'Export Summary');
+    var exportIcon = icon('export');
+    if (exportIcon) exportBtn.appendChild(exportIcon);
+    exportBtn.appendChild(el('span', {}, 'Export Summary'));
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
     toolbar.appendChild(filterBtn);
@@ -518,21 +524,26 @@
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
-    activityPanel.appendChild(el('h2', { className: 'panel-title' }, 'Recent Activity'));
+    activityPanel.innerHTML = '<h2 class="panel-title">Recent Activity</h2>';
     var activityList = el('ul', { className: 'activity-list' });
     (s.activity || []).forEach(function (evt) {
-      activityList.appendChild(buildActivityItem(evt));
+      var li = el('li', { className: 'activity-item' });
+      li.innerHTML = '<span class="activity-type">' + escapeHtml(evt.type) + '</span>' +
+        '<span class="activity-message">' + escapeHtml(evt.message) + '</span>';
+      activityList.appendChild(li);
     });
     activityPanel.appendChild(activityList);
 
     var stockPanel = el('div', { className: 'insights-panel' });
-    stockPanel.appendChild(el('h2', { className: 'panel-title' }, 'Stock Follow-up'));
+    stockPanel.innerHTML = '<h2 class="panel-title">Stock Follow-up</h2>';
     var reviewBtn = el('button', {
       type: 'button',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    setIconAndLabel(reviewBtn, 'review', 'Review Stock');
+    var reviewIcon = icon('review');
+    if (reviewIcon) reviewBtn.appendChild(reviewIcon);
+    reviewBtn.appendChild(el('span', {}, 'Review Stock'));
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
     stockPanel.appendChild(hint);
@@ -545,15 +556,6 @@
     surface.appendChild(metrics);
     surface.appendChild(lower);
     return surface;
-  }
-
-  function buildActivityItem(evt) {
-    var li = el('li', { className: 'activity-item' });
-    var typeSpan = el('span', { className: 'activity-type' }, evt.type);
-    var messageSpan = el('span', { className: 'activity-message' }, evt.message);
-    li.appendChild(typeSpan);
-    li.appendChild(messageSpan);
-    return li;
   }
 
   function buildMetricCard(label, value) {
@@ -684,6 +686,16 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  function formatPrice(price) {
+    if (price === undefined || price === null || isNaN(price)) return '0.00';
+    return Number(price).toFixed(2);
+  }
+
+  function formatStock(stock) {
+    if (stock === undefined || stock === null) return '0';
+    return String(stock);
   }
 
   if (document.readyState === 'loading') {
