@@ -5,7 +5,16 @@
     if (global.app && global.app.actions && typeof global.app.actions.saveEditingItem === 'function') {
       var result = global.app.actions.saveEditingItem();
       if (!result || !result.ok) {
-        return { ok: false, error: (result && result.errors && result.errors.join('; ')) || 'Save failed' };
+        var errors = result && result.errors;
+        var message;
+        if (Array.isArray(errors)) {
+          message = errors.join('; ');
+        } else if (typeof errors === 'string') {
+          message = errors;
+        } else {
+          message = 'Save failed';
+        }
+        return { ok: false, error: message };
       }
       return { ok: true };
     }

@@ -26,8 +26,14 @@
     <script src="assets/js/us-002/act_cancel_edit.js" defer></script>
     <script>
       window.addEventListener('load', function () {
-        if (window.app && window.app.actions && window.app.actions.createNewItem) {
-          window.app.actions.createNewItem();
+        if (window.app && window.app.actions) {
+          var params = new URLSearchParams(window.location.search);
+          var itemId = params.get('id');
+          if (itemId && typeof window.app.actions.editItem === 'function') {
+            window.app.actions.editItem(itemId);
+          } else if (typeof window.app.actions.createNewItem === 'function') {
+            window.app.actions.createNewItem();
+          }
         }
       });
     </script>
