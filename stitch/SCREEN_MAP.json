@@ -1,0 +1,29 @@
+[
+  {
+    "screenId": "718a4954045244f0bad20a884a3b1b6b",
+    "name": "Item Editor - Distinctive Premium Food Sector Company Website",
+    "type": "form",
+    "description": "Item Editor - Distinctive Premium Food Sector Company Website screen",
+    "surfaceIds": [
+      "SURF_ITEM_EDITOR"
+    ]
+  },
+  {
+    "screenId": "02c2feedc55b4527a5f27786a55544a3",
+    "name": "Item Operations - Distinctive Premium Food Sector Company Website",
+    "type": "app-screen",
+    "description": "Item Operations - Distinctive Premium Food Sector Company Website screen",
+    "surfaceIds": [
+      "SURF_ITEM_OPERATIONS"
+    ]
+  },
+  {
+    "screenId": "e75641c8cdaf4b8986de9c4470cb83c7",
+    "name": "Insights - Distinctive Premium Food Sector Company Website",
+    "type": "app-screen",
+    "description": "Insights - Distinctive Premium Food Sector Company Website screen",
+    "surfaceIds": [
+      "SURF_INSIGHTS"
+    ]
+  }
+]

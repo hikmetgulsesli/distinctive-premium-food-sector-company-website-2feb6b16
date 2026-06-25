@@ -1,0 +1,1849 @@
+{
+  "generatedAt": "2026-06-25T06:03:42.389Z",
+  "screenCount": 3,
+  "screens": {
+    "02c2feedc55b4527a5f27786a55544a3": {
+      "screenId": "02c2feedc55b4527a5f27786a55544a3",
+      "materialSymbolsRequired": true,
+      "sections": [
+        {
+          "tag": "nav",
+          "layout": "flex-col",
+          "classes": [
+            "hidden",
+            "md:flex",
+            "flex-col",
+            "h-screen",
+            "w-64",
+            "fixed",
+            "left-0",
+            "top-0",
+            "bg-surface-container",
+            "dark:bg-surface-container"
+          ],
+          "childCount": 7
+        },
+        {
+          "tag": "main",
+          "layout": "flex-col",
+          "classes": [
+            "w-full",
+            "md:ml-64",
+            "min-h-screen",
+            "flex",
+            "flex-col"
+          ],
+          "childCount": 59
+        }
+      ],
+      "buttons": [
+        {
+          "kind": "button",
+          "label": "Create New Item",
+          "classes": [
+            "bg-primary",
+            "text-on-primary",
+            "px-6",
+            "py-3",
+            "rounded",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "hover:opacity-90",
+            "transition-opacity",
+            "flex",
+            "items-center",
+            "gap-2"
+          ],
+          "icon": "add",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#",
+          "expectedRoute": "#"
+        },
+        {
+          "kind": "button",
+          "label": "RETRY LOAD",
+          "classes": [
+            "text-secondary",
+            "border-b-2",
+            "border-secondary",
+            "pb-1",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "hover:text-secondary-container",
+            "transition-colors"
+          ],
+          "icon": null,
+          "action": "retry",
+          "expectedBehavior": "retry the failed action and show loading/error feedback"
+        },
+        {
+          "kind": "button",
+          "label": "Edit Item",
+          "classes": [
+            "flex-1",
+            "bg-primary",
+            "text-on-primary",
+            "py-3",
+            "rounded",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "hover:opacity-90",
+            "transition-opacity"
+          ],
+          "icon": null,
+          "action": "edit",
+          "expectedBehavior": "open edit flow or update selected item/state"
+        },
+        {
+          "kind": "button",
+          "label": "more_horiz",
+          "classes": [
+            "p-3",
+            "border",
+            "border-outline/30",
+            "rounded",
+            "hover:bg-surface-container",
+            "transition-colors",
+            "text-primary",
+            "flex",
+            "items-center",
+            "justify-center"
+          ],
+          "icon": "more_horiz",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "Köz & Maye Bakery Studio",
+          "classes": [],
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        }
+      ],
+      "inputs": [
+        {
+          "kind": "input",
+          "type": "text",
+          "label": "Search records...",
+          "placeholder": "Search records...",
+          "name": "",
+          "classes": [
+            "w-full",
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "pl-10",
+            "py-2",
+            "font-body-md",
+            "text-body-md",
+            "text-primary",
+            "placeholder:text-on-surface-variant",
+            "transition-colors"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "select",
+          "label": "select",
+          "placeholder": "",
+          "name": "",
+          "classes": [
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "py-2",
+            "font-body-md",
+            "text-body-md",
+            "text-primary",
+            "min-w-[120px]"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        }
+      ],
+      "navLinks": [
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "dashboard",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "inventory_2",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Schedule",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "calendar_today",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Clients",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "groups",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "settings",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "settings",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Support",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "help_outline",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "logout",
+          "href": "#",
+          "classes": [
+            "font-body-md",
+            "text-body-md"
+          ],
+          "icon": "logout",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Operations",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "pb-1"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "href": "#",
+          "classes": [
+            "text-secondary",
+            "border-b-2",
+            "border-secondary",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "pb-1"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "pb-1"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "transition-opacity",
+            "duration-200"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "transition-opacity",
+            "duration-200"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "transition-opacity",
+            "duration-200"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        }
+      ],
+      "cards": [],
+      "icons": [
+        "dashboard",
+        "calendar_today",
+        "groups",
+        "settings",
+        "help_outline",
+        "logout",
+        "notifications",
+        "account_circle",
+        "add",
+        "search",
+        "chevron_right",
+        "warning",
+        "cloud_off",
+        "more_horiz"
+      ],
+      "images": [
+        {
+          "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuBw8_305GX5r5s0HPK2gGHwAdVnDYHhg4B7kmu4bXdbOS748wjIJR-JmOwUvmR21ncYN6_mvfX5_IEsiOShcuYvBQ45Ti_T7CnO4tkETntuRjfBxpKrUf4kb9S5yxlLKJRznAPGnDTCa-5X4r3kOL",
+          "alt": "A macro shot of a freshly baked artisanal sourdough loaf sitting on a wooden cutting board. The lighting is soft and natural, emphasizing the deep golden-brown crust and dusting of white flour. The background is slightly blurred out, showing a bright, minimalist bakery setting with cream-colored walls. The aesthetic is warm, tactile, and highly professional."
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuA1FFg1Dgdz0AJ12-ZNVy4EFQYC1O0xyJJOXNzHHoXJ1-khnu1BztaybXtoNTMmzq0hyWgekEY4fAfnHrEWOBJ3ypdj1EXgYwZCVavrpUSE7wRja_BDEmWgE5nJsXTYx4DfIFzRTYQFctPyUe4RJb",
+          "alt": "A perfectly flaky, golden-brown butter croissant placed on a simple white ceramic plate. The lighting is bright and directional, highlighting the distinct layers of pastry. The setting is clean and minimalist, with a subtle textured cream background. The overall mood is elegant and appetizing."
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuAIVMZuFEJUlzQr9QA2Ypq7Q_mADmEGwP5F7T1p-GLS8jG8MEPLFbbB8-VnlybdzzB7TebNuHsiPtcTZ7Ma-ZN6IXzMLP5AmogCTgXiGMdv7I2pLTi69aO3TcMFugTqixrLGhD4YlJ0j4dhhS0Ao-",
+          "alt": "A delicate, deep dark chocolate tart with a smooth, glossy ganache finish, sitting on a textured slate coaster. The lighting is moody but clear, highlighting the rich tones of the chocolate against a clean, warm cream background. The aesthetic is precise, modern, and high-end culinary."
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDdIdK_PpVaaF9PUvKv9l0jJa5i9juaihGjYkUVxQ1V1hsxl6pvouAlJGgvqm5bqNFEumfX4v6siQOBXZa0-_rdleO9TdU6Ny4nVQdA_FSG_5y007JbRODhu0zfw6b_Y35pX9sgAZ7HWjK4yS_dI6",
+          "alt": "A beautiful overhead shot of a freshly baked artisanal sourdough loaf on a pristine white marble counter. Sunlight casts soft, natural shadows. The scene includes a minimal dusting of flour and a sleek, modern bread knife resting nearby. The aesthetic is clean, warm, and highly editorial."
+        }
+      ],
+      "cssVars": {},
+      "colorPalette": {
+        "surface-container": "#f0eee9",
+        "on-tertiary-fixed": "#271809",
+        "on-secondary-fixed-variant": "#78310f",
+        "on-secondary-fixed": "#370e00",
+        "on-primary-container": "#8e8d8c",
+        "tertiary": "#1c0f03",
+        "background": "#fbf9f4",
+        "on-secondary": "#ffffff",
+        "on-surface-variant": "#444748",
+        "on-primary": "#ffffff",
+        "on-error-container": "#93000a",
+        "tertiary-fixed-dim": "#ddc2a9",
+        "inverse-primary": "#c8c6c5",
+        "on-primary-fixed-variant": "#474746",
+        "surface-dim": "#dbdad5",
+        "primary-fixed-dim": "#c8c6c5",
+        "surface": "#fbf9f4",
+        "secondary-fixed-dim": "#ffb598",
+        "primary-fixed": "#e4e2e1",
+        "on-tertiary": "#ffffff",
+        "outline": "#747878",
+        "surface-container-low": "#f5f3ee",
+        "tertiary-fixed": "#faddc4",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary-container": "#772f0e",
+        "surface-container-highest": "#e4e2dd",
+        "surface-bright": "#fbf9f4",
+        "surface-tint": "#5f5e5e",
+        "on-error": "#ffffff",
+        "surface-container-high": "#eae8e3",
+        "error-container": "#ffdad6",
+        "tertiary-container": "#332313",
+        "surface-variant": "#e4e2dd",
+        "error": "#ba1a1a",
+        "on-primary-fixed": "#1b1c1c",
+        "secondary-container": "#fe9970",
+        "primary": "#111111",
+        "on-surface": "#1b1c19",
+        "on-tertiary-fixed-variant": "#564331",
+        "secondary": "#974725",
+        "primary-container": "#262626",
+        "inverse-on-surface": "#f2f1ec",
+        "on-background": "#1b1c19",
+        "inverse-surface": "#30312e",
+        "secondary-fixed": "#ffdbce",
+        "on-tertiary-container": "#a18973",
+        "outline-variant": "#c4c7c7"
+      },
+      "fonts": [
+        "Hanken Grotesk",
+        "Libre Caslon Text",
+        "Material Symbols Outlined"
+      ],
+      "layoutHints": {
+        "gridCols": 1,
+        "flexDirection": "col",
+        "gap": "2"
+      },
+      "behaviorContract": [
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "icon": "dashboard",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory",
+          "icon": "inventory_2",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Schedule",
+          "icon": "calendar_today",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Clients",
+          "icon": "groups",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "settings",
+          "icon": "settings",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Support",
+          "icon": "help_outline",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "logout",
+          "icon": "logout",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Operations",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "Create New Item",
+          "icon": "add",
+          "action": "navigate",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "RETRY LOAD",
+          "icon": null,
+          "action": "retry",
+          "expectedBehavior": "retry the failed action and show loading/error feedback"
+        },
+        {
+          "kind": "button",
+          "label": "Edit Item",
+          "icon": null,
+          "action": "edit",
+          "expectedBehavior": "open edit flow or update selected item/state"
+        },
+        {
+          "kind": "button",
+          "label": "more_horiz",
+          "icon": "more_horiz",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "Köz & Maye Bakery Studio",
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "input",
+          "label": "Search records...",
+          "type": "text",
+          "placeholder": "Search records...",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "select",
+          "type": "select",
+          "placeholder": "",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        }
+      ],
+      "tabBar": [
+        {
+          "kind": "button",
+          "label": "Köz & Maye Bakery Studio",
+          "icon": null,
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "icon": "dashboard",
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Inventory",
+          "icon": "inventory_2",
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Schedule",
+          "icon": "calendar_today",
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Clients",
+          "icon": "groups",
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "settings",
+          "icon": "settings",
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Support",
+          "icon": "help_outline",
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "logout",
+          "icon": "logout",
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "active": false
+        }
+      ],
+      "title": "Item Operations - Distinctive Premium Food Sector Company Website"
+    },
+    "718a4954045244f0bad20a884a3b1b6b": {
+      "screenId": "718a4954045244f0bad20a884a3b1b6b",
+      "materialSymbolsRequired": true,
+      "sections": [
+        {
+          "tag": "header",
+          "layout": "block",
+          "classes": [
+            "w-full",
+            "top-0",
+            "sticky",
+            "z-50",
+            "border-b",
+            "border-outline/30",
+            "bg-background/95",
+            "backdrop-blur-sm",
+            "shadow-[0px_10px_30px_rgba(38,38,38,0.04)]"
+          ],
+          "childCount": 3
+        },
+        {
+          "tag": "main",
+          "layout": "flex-row",
+          "classes": [
+            "flex-grow",
+            "max-w-[1280px]",
+            "w-full",
+            "mx-auto",
+            "px-margin-mobile",
+            "md:px-margin-desktop",
+            "py-stack-lg",
+            "relative"
+          ],
+          "childCount": 24
+        },
+        {
+          "tag": "footer",
+          "layout": "block",
+          "classes": [
+            "w-full",
+            "mt-stack-lg",
+            "border-t",
+            "border-outline/10",
+            "bg-surface-container-lowest"
+          ],
+          "childCount": 3
+        }
+      ],
+      "buttons": [
+        {
+          "kind": "button",
+          "label": "notifications",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:opacity-80",
+            "transition-opacity",
+            "p-2"
+          ],
+          "icon": "notifications",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#",
+          "expectedRoute": "#"
+        },
+        {
+          "kind": "button",
+          "label": "account_circle",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:opacity-80",
+            "transition-opacity",
+            "p-2"
+          ],
+          "icon": "account_circle",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "arrow_back",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:text-primary",
+            "transition-colors",
+            "flex",
+            "items-center",
+            "justify-center",
+            "p-2",
+            "rounded-full",
+            "hover:bg-surface-container"
+          ],
+          "icon": "arrow_back",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "Cancel Edit",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "uppercase",
+            "text-secondary",
+            "border-b-2",
+            "border-secondary",
+            "pb-1",
+            "hover:opacity-80",
+            "transition-opacity"
+          ],
+          "icon": null,
+          "action": "dismiss",
+          "expectedBehavior": "close dialog/panel or return to previous state"
+        },
+        {
+          "kind": "button",
+          "label": "Save Record",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "uppercase",
+            "bg-primary",
+            "text-on-primary",
+            "px-8",
+            "py-3",
+            "rounded-DEFAULT",
+            "hover:bg-tertiary",
+            "transition-colors",
+            "shadow-sm"
+          ],
+          "icon": null,
+          "action": "form-submit",
+          "expectedBehavior": "validate inputs and submit/apply changes"
+        },
+        {
+          "kind": "button",
+          "label": "Update Image",
+          "classes": [
+            "w-full",
+            "border",
+            "border-outline/30",
+            "py-2",
+            "rounded-DEFAULT",
+            "font-label-caps",
+            "text-label-caps",
+            "uppercase",
+            "text-primary",
+            "hover:bg-surface-variant",
+            "transition-colors",
+            "flex",
+            "items-center",
+            "justify-center",
+            "gap-2"
+          ],
+          "icon": "upload",
+          "action": "edit",
+          "expectedBehavior": "open edit flow or update selected item/state"
+        }
+      ],
+      "inputs": [
+        {
+          "kind": "input",
+          "type": "text",
+          "label": "e.g. Sourdough Boule",
+          "placeholder": "e.g. Sourdough Boule",
+          "name": "item-name",
+          "classes": [
+            "w-full",
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "px-0",
+            "py-2",
+            "font-body-lg",
+            "text-primary",
+            "placeholder-outline-variant",
+            "transition-colors"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "select",
+          "label": "category",
+          "placeholder": "",
+          "name": "category",
+          "classes": [
+            "w-full",
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "px-0",
+            "py-2",
+            "font-body-lg",
+            "text-primary",
+            "appearance-none",
+            "cursor-pointer",
+            "transition-colors"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "number",
+          "label": "0.00",
+          "placeholder": "0.00",
+          "name": "price",
+          "classes": [
+            "w-full",
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "px-0",
+            "py-2",
+            "font-body-lg",
+            "text-primary",
+            "placeholder-outline-variant",
+            "transition-colors"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "textarea",
+          "label": "Describe the flavor profile, ingredients, and crafting process...",
+          "placeholder": "Describe the flavor profile, ingredients, and crafting process...",
+          "name": "description",
+          "classes": [
+            "w-full",
+            "bg-transparent",
+            "border",
+            "border-outline/30",
+            "rounded-DEFAULT",
+            "focus:border-secondary",
+            "focus:ring-1",
+            "focus:ring-secondary",
+            "p-4",
+            "font-body-md",
+            "text-primary",
+            "placeholder-outline-variant",
+            "transition-colors",
+            "resize-none"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "number",
+          "label": "stock",
+          "placeholder": "",
+          "name": "stock",
+          "classes": [
+            "w-24",
+            "bg-transparent",
+            "border-0",
+            "border-b",
+            "border-outline/30",
+            "focus:border-secondary",
+            "focus:ring-0",
+            "px-0",
+            "py-2",
+            "font-body-lg",
+            "text-primary",
+            "text-center",
+            "transition-colors"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "type": "checkbox",
+          "label": "checkbox",
+          "placeholder": "",
+          "name": "",
+          "classes": [
+            "sr-only",
+            "peer"
+          ],
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        }
+      ],
+      "navLinks": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "text-on-surface-variant",
+            "hover:text-primary",
+            "transition-colors",
+            "pb-1",
+            "uppercase"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "text-secondary",
+            "border-b-2",
+            "border-secondary",
+            "pb-1",
+            "uppercase",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "text-on-surface-variant",
+            "hover:text-primary",
+            "transition-colors",
+            "pb-1",
+            "uppercase"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "uppercase"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "uppercase"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "href": "#",
+          "classes": [
+            "font-label-caps",
+            "text-label-caps",
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors",
+            "uppercase"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        }
+      ],
+      "cards": [],
+      "icons": [
+        "notifications",
+        "account_circle",
+        "info",
+        "arrow_back",
+        "upload"
+      ],
+      "images": [
+        {
+          "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuBmUZkTwWrZrgxelflsexycxHBALomt2ZFSAaE4vxhzFqlTHvTojV0TNxWnCNDPKlPWVNGPQkNBjt6KqzwCBgzzzSrPNSYMbMlEQy8IK7VD6DWiNRdzoffDciMRpKqqQNEGiIkzti5T7lYFtewbYR",
+          "alt": "A professional, top-down view of a rustic sourdough boule resting on a clean, light cream stone surface. The lighting is soft and natural, emphasizing the deeply caramelized, crusty exterior and artisanal scoring pattern. The aesthetic is high-end, minimalist culinary photography with a warm, inviting tone."
+        }
+      ],
+      "cssVars": {},
+      "colorPalette": {
+        "surface-container": "#f0eee9",
+        "on-tertiary-fixed": "#271809",
+        "on-secondary-fixed-variant": "#78310f",
+        "on-secondary-fixed": "#370e00",
+        "on-primary-container": "#8e8d8c",
+        "tertiary": "#1c0f03",
+        "background": "#fbf9f4",
+        "on-secondary": "#ffffff",
+        "on-surface-variant": "#444748",
+        "on-primary": "#ffffff",
+        "on-error-container": "#93000a",
+        "tertiary-fixed-dim": "#ddc2a9",
+        "inverse-primary": "#c8c6c5",
+        "on-primary-fixed-variant": "#474746",
+        "surface-dim": "#dbdad5",
+        "primary-fixed-dim": "#c8c6c5",
+        "surface": "#fbf9f4",
+        "secondary-fixed-dim": "#ffb598",
+        "primary-fixed": "#e4e2e1",
+        "on-tertiary": "#ffffff",
+        "outline": "#747878",
+        "surface-container-low": "#f5f3ee",
+        "tertiary-fixed": "#faddc4",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary-container": "#772f0e",
+        "surface-container-highest": "#e4e2dd",
+        "surface-bright": "#fbf9f4",
+        "surface-tint": "#5f5e5e",
+        "on-error": "#ffffff",
+        "surface-container-high": "#eae8e3",
+        "error-container": "#ffdad6",
+        "tertiary-container": "#332313",
+        "surface-variant": "#e4e2dd",
+        "error": "#ba1a1a",
+        "on-primary-fixed": "#1b1c1c",
+        "secondary-container": "#fe9970",
+        "primary": "#111111",
+        "on-surface": "#1b1c19",
+        "on-tertiary-fixed-variant": "#564331",
+        "secondary": "#974725",
+        "primary-container": "#262626",
+        "inverse-on-surface": "#f2f1ec",
+        "on-background": "#1b1c19",
+        "inverse-surface": "#30312e",
+        "secondary-fixed": "#ffdbce",
+        "on-tertiary-container": "#a18973",
+        "outline-variant": "#c4c7c7"
+      },
+      "fonts": [
+        "Hanken Grotesk",
+        "Libre Caslon Text",
+        "Material Symbols Outlined"
+      ],
+      "layoutHints": {
+        "gridCols": 1,
+        "flexDirection": "col",
+        "gap": "3"
+      },
+      "behaviorContract": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "notifications",
+          "icon": "notifications",
+          "action": "navigate",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "account_circle",
+          "icon": "account_circle",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "arrow_back",
+          "icon": "arrow_back",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "Cancel Edit",
+          "icon": null,
+          "action": "dismiss",
+          "expectedBehavior": "close dialog/panel or return to previous state"
+        },
+        {
+          "kind": "button",
+          "label": "Save Record",
+          "icon": null,
+          "action": "form-submit",
+          "expectedBehavior": "validate inputs and submit/apply changes"
+        },
+        {
+          "kind": "button",
+          "label": "Update Image",
+          "icon": "upload",
+          "action": "edit",
+          "expectedBehavior": "open edit flow or update selected item/state"
+        },
+        {
+          "kind": "input",
+          "label": "e.g. Sourdough Boule",
+          "type": "text",
+          "placeholder": "e.g. Sourdough Boule",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "category",
+          "type": "select",
+          "placeholder": "",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "0.00",
+          "type": "number",
+          "placeholder": "0.00",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "Describe the flavor profile, ingredients, and crafting process...",
+          "type": "textarea",
+          "placeholder": "Describe the flavor profile, ingredients, and crafting process...",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "stock",
+          "type": "number",
+          "placeholder": "",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        },
+        {
+          "kind": "input",
+          "label": "checkbox",
+          "type": "checkbox",
+          "placeholder": "",
+          "expectedBehavior": "controlled value with onChange; validation if required by PRD"
+        }
+      ],
+      "tabBar": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "icon": null,
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "icon": null,
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "active": false
+        }
+      ],
+      "title": "Item Editor - Distinctive Premium Food Sector Company Website"
+    },
+    "e75641c8cdaf4b8986de9c4470cb83c7": {
+      "screenId": "e75641c8cdaf4b8986de9c4470cb83c7",
+      "materialSymbolsRequired": true,
+      "sections": [
+        {
+          "tag": "header",
+          "layout": "block",
+          "classes": [
+            "w-full",
+            "top-0",
+            "sticky",
+            "border-b",
+            "border-outline/30",
+            "bg-background/95",
+            "backdrop-blur-sm",
+            "shadow-[0px_10px_30px_rgba(38,38,38,0.04)]",
+            "z-40",
+            "hidden"
+          ],
+          "childCount": 3
+        },
+        {
+          "tag": "nav",
+          "layout": "flex-row",
+          "classes": [
+            "md:hidden",
+            "fixed",
+            "bottom-0",
+            "w-full",
+            "bg-surface-container",
+            "border-t",
+            "border-outline/20",
+            "z-40",
+            "flex",
+            "justify-around"
+          ],
+          "childCount": 0
+        },
+        {
+          "tag": "main",
+          "layout": "flex-row",
+          "classes": [
+            "flex-1",
+            "max-w-[1280px]",
+            "w-full",
+            "mx-auto",
+            "px-margin-mobile",
+            "md:px-margin-desktop",
+            "py-stack-md",
+            "md:py-stack-lg",
+            "pb-24",
+            "md:pb-stack-lg"
+          ],
+          "childCount": 42
+        },
+        {
+          "tag": "footer",
+          "layout": "block",
+          "classes": [
+            "w-full",
+            "mt-stack-lg",
+            "border-t",
+            "border-outline/10",
+            "bg-surface-container-lowest",
+            "dark:bg-surface-container-lowest",
+            "hidden",
+            "md:block"
+          ],
+          "childCount": 2
+        }
+      ],
+      "buttons": [
+        {
+          "kind": "button",
+          "label": "notifications",
+          "classes": [
+            "hover:opacity-80",
+            "transition-opacity",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": "notifications",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#",
+          "expectedRoute": "#"
+        },
+        {
+          "kind": "button",
+          "label": "account_circle",
+          "classes": [
+            "hover:opacity-80",
+            "transition-opacity",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": "account_circle",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "FILTER",
+          "classes": [
+            "flex",
+            "items-center",
+            "gap-2",
+            "px-4",
+            "py-2",
+            "border-b-2",
+            "border-secondary",
+            "text-secondary",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "hover:bg-secondary/5",
+            "transition-colors"
+          ],
+          "icon": "filter_list",
+          "action": "search",
+          "expectedBehavior": "filter/search visible results from input/query"
+        },
+        {
+          "kind": "button",
+          "label": "EXPORT SUMMARY",
+          "classes": [
+            "bg-primary",
+            "text-on-primary",
+            "font-label-caps",
+            "text-label-caps",
+            "tracking-widest",
+            "px-6",
+            "py-3",
+            "rounded",
+            "hover:bg-primary/90",
+            "transition-colors",
+            "shadow-[0px_10px_30px_rgba(38,38,38,0.04)]"
+          ],
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "REVIEW STOCK",
+          "classes": [
+            "text-secondary",
+            "font-label-caps",
+            "text-label-caps",
+            "border-b-2",
+            "border-secondary",
+            "pb-1",
+            "hover:text-secondary/80",
+            "transition-colors"
+          ],
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        }
+      ],
+      "inputs": [],
+      "navLinks": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "dark:text-outline-variant",
+            "hover:text-primary",
+            "transition-colors",
+            "pb-1",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "dark:text-outline-variant",
+            "hover:text-primary",
+            "transition-colors",
+            "pb-1",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "href": "#",
+          "classes": [
+            "text-secondary",
+            "dark:text-secondary-container",
+            "border-b-2",
+            "border-secondary",
+            "pb-1",
+            "cursor-pointer",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "href": "#",
+          "classes": [
+            "material-symbols-outlined",
+            "text-2xl"
+          ],
+          "icon": "dashboard",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "inventory_2",
+          "href": "#",
+          "classes": [
+            "material-symbols-outlined",
+            "text-2xl"
+          ],
+          "icon": "inventory_2",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "insights",
+          "href": "#",
+          "classes": [
+            "material-symbols-outlined",
+            "text-2xl"
+          ],
+          "icon": "insights",
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "href": "#",
+          "classes": [
+            "text-on-surface-variant",
+            "hover:text-secondary",
+            "transition-colors"
+          ],
+          "icon": null,
+          "action": "navigate",
+          "expectedBehavior": "navigate:#"
+        }
+      ],
+      "cards": [],
+      "icons": [
+        "notifications",
+        "account_circle",
+        "dashboard",
+        "insights",
+        "filter_list",
+        "warning",
+        "sync",
+        "local_shipping",
+        "update",
+        "receipt_long"
+      ],
+      "images": [],
+      "cssVars": {},
+      "colorPalette": {
+        "surface-container": "#f0eee9",
+        "on-tertiary-fixed": "#271809",
+        "on-secondary-fixed-variant": "#78310f",
+        "on-secondary-fixed": "#370e00",
+        "on-primary-container": "#8e8d8c",
+        "tertiary": "#1c0f03",
+        "background": "#fbf9f4",
+        "on-secondary": "#ffffff",
+        "on-surface-variant": "#444748",
+        "on-primary": "#ffffff",
+        "on-error-container": "#93000a",
+        "tertiary-fixed-dim": "#ddc2a9",
+        "inverse-primary": "#c8c6c5",
+        "on-primary-fixed-variant": "#474746",
+        "surface-dim": "#dbdad5",
+        "primary-fixed-dim": "#c8c6c5",
+        "surface": "#fbf9f4",
+        "secondary-fixed-dim": "#ffb598",
+        "primary-fixed": "#e4e2e1",
+        "on-tertiary": "#ffffff",
+        "outline": "#747878",
+        "surface-container-low": "#f5f3ee",
+        "tertiary-fixed": "#faddc4",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary-container": "#772f0e",
+        "surface-container-highest": "#e4e2dd",
+        "surface-bright": "#fbf9f4",
+        "surface-tint": "#5f5e5e",
+        "on-error": "#ffffff",
+        "surface-container-high": "#eae8e3",
+        "error-container": "#ffdad6",
+        "tertiary-container": "#332313",
+        "surface-variant": "#e4e2dd",
+        "error": "#ba1a1a",
+        "on-primary-fixed": "#1b1c1c",
+        "secondary-container": "#fe9970",
+        "primary": "#111111",
+        "on-surface": "#1b1c19",
+        "on-tertiary-fixed-variant": "#564331",
+        "secondary": "#974725",
+        "primary-container": "#262626",
+        "inverse-on-surface": "#f2f1ec",
+        "on-background": "#1b1c19",
+        "inverse-surface": "#30312e",
+        "secondary-fixed": "#ffdbce",
+        "on-tertiary-container": "#a18973",
+        "outline-variant": "#c4c7c7"
+      },
+      "fonts": [
+        "Hanken Grotesk",
+        "Libre Caslon Text",
+        "Material Symbols Outlined"
+      ],
+      "layoutHints": {
+        "gridCols": 1,
+        "flexDirection": "col",
+        "gap": "1"
+      },
+      "behaviorContract": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "icon": "dashboard",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "inventory_2",
+          "icon": "inventory_2",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "insights",
+          "icon": "insights",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Privacy Policy",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "notifications",
+          "icon": "notifications",
+          "action": "navigate",
+          "route": "#",
+          "expectedBehavior": "navigate:#"
+        },
+        {
+          "kind": "button",
+          "label": "account_circle",
+          "icon": "account_circle",
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "FILTER",
+          "icon": "filter_list",
+          "action": "search",
+          "expectedBehavior": "filter/search visible results from input/query"
+        },
+        {
+          "kind": "button",
+          "label": "EXPORT SUMMARY",
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        },
+        {
+          "kind": "button",
+          "label": "REVIEW STOCK",
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        }
+      ],
+      "tabBar": [
+        {
+          "kind": "link",
+          "label": "Operations",
+          "icon": null,
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Editor",
+          "icon": null,
+          "route": "#",
+          "active": true
+        },
+        {
+          "kind": "link",
+          "label": "Insights",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "dashboard",
+          "icon": "dashboard",
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "inventory_2",
+          "icon": "inventory_2",
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "insights",
+          "icon": "insights",
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Terms of Service",
+          "icon": null,
+          "route": "#",
+          "active": false
+        },
+        {
+          "kind": "link",
+          "label": "Inventory API",
+          "icon": null,
+          "route": "#",
+          "active": false
+        }
+      ],
+      "title": "Insights - Distinctive Premium Food Sector Company Website"
+    }
+  }
+}
