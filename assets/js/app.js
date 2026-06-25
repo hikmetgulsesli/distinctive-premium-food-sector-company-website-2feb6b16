@@ -244,7 +244,7 @@
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
       appendIcon(a, link.icon);
-      a.appendChild(el('span', {}, escapeHtml(link.label)));
+      a.appendChild(el('span', {}, link.label));
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
