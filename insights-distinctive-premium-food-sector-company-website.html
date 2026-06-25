@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Distinctive Premium Food Sector Company Website</title>
+    <title>Insights - Köz &amp; Maye</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,14 +22,14 @@
     <script src="assets/js/distinctive-premium-food-sector-company-website.storage.js" defer></script>
     <script src="assets/js/distinctive-premium-food-sector-company-website.state.js" defer></script>
     <script src="assets/js/app.js" defer></script>
-    <script src="assets/js/us-002/act_search_records.js" defer></script>
-    <script src="assets/js/us-002/act_create_record.js" defer></script>
-    <script src="assets/js/us-002/act_select_record.js" defer></script>
-    <script src="assets/js/us-002/act_retry_load.js" defer></script>
-    <script src="assets/js/us-002/act_save_record.js" defer></script>
-    <script src="assets/js/us-002/act_cancel_edit.js" defer></script>
     <script src="assets/js/us-003/act_filter_insights.js" defer></script>
     <script src="assets/js/us-003/act_export_summary.js" defer></script>
-    <script src="assets/js/test-bridge.js" defer></script>
+    <script>
+      window.addEventListener('load', function () {
+        if (window.app && window.app.actions && window.app.actions.setSurface) {
+          window.app.actions.setSurface('SURF_INSIGHTS');
+        }
+      });
+    </script>
   </body>
 </html>
