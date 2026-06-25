@@ -3,7 +3,7 @@
 
   function getState() {
     if (global.app && typeof global.app.state === 'function') {
-      return global.app.state();
+      return global.app.state() || {};
     }
     return {};
   }

@@ -11,7 +11,7 @@
 
   function getState() {
     if (global.app && typeof global.app.state === 'function') {
-      return global.app.state();
+      return global.app.state() || {};
     }
     return {};
   }
@@ -19,6 +19,10 @@
   function closeFilterMenu() {
     var existing = document.getElementById('insights-filter-menu');
     if (existing) existing.remove();
+    if (closeFilterMenu.listener) {
+      document.removeEventListener('click', closeFilterMenu.listener);
+      closeFilterMenu.listener = null;
+    }
   }
 
   function renderFilterMenu() {
@@ -77,12 +81,12 @@
     }
 
     setTimeout(function () {
-      document.addEventListener('click', function onOutsideClick(e) {
+      closeFilterMenu.listener = function onOutsideClick(e) {
         if (!menu.contains(e.target) && e.target.closest('[data-action-id="ACT_FILTER_INSIGHTS"]') !== btn) {
           closeFilterMenu();
-          document.removeEventListener('click', onOutsideClick);
         }
-      });
+      };
+      document.addEventListener('click', closeFilterMenu.listener);
     }, 0);
 
     menu.addEventListener('click', function (e) {
@@ -131,7 +135,7 @@
     var existingBadge = surface.querySelector('.insights-active-filter');
     if (existingBadge) existingBadge.remove();
 
-    if (key !== 'all') {
+    if (key !== 'all' && toolbar) {
       var option = FILTER_OPTIONS.find(function (o) { return o.key === key; });
       var badge = document.createElement('span');
       badge.className = 'insights-active-filter';
