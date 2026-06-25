@@ -31,8 +31,38 @@
     check: '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
-  function icon(name) {
-    return ICONS[name] || '';
+  var svgParser = new DOMParser();
+  var svgCache = {};
+
+  function svgIcon(name) {
+    if (svgCache[name]) {
+      return svgCache[name].cloneNode(true);
+    }
+    var svgText = ICONS[name];
+    if (!svgText) return null;
+    var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
+    var svg = doc.documentElement;
+    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
+    var adopted = document.adoptNode(svg);
+    svgCache[name] = adopted;
+    return adopted.cloneNode(true);
+  }
+
+  function clearChildren(element) {
+    element.textContent = '';
+  }
+
+  function setIcon(element, name) {
+    clearChildren(element);
+    var svg = svgIcon(name);
+    if (svg) element.appendChild(svg);
+  }
+
+  function setIconWithLabel(element, name, label) {
+    clearChildren(element);
+    var svg = svgIcon(name);
+    if (svg) element.appendChild(svg);
+    element.appendChild(el('span', null, label));
   }
 
   function readFixtureData() {
@@ -114,7 +144,7 @@
 
   function render() {
     var s = state.getState();
-    root.innerHTML = '';
+    clearChildren(root);
     root.appendChild(buildShell(s));
   }
 
@@ -169,7 +199,7 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    btn.innerHTML = icon(iconName);
+    setIcon(btn, iconName);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -220,7 +250,7 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      a.innerHTML = icon(link.icon) + '<span>' + escapeHtml(link.label) + '</span>';
+      setIconWithLabel(a, link.icon, link.label);
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
@@ -252,7 +282,7 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    close.innerHTML = icon('cancel');
+    setIcon(close, 'cancel');
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -268,14 +298,16 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    createBtn.innerHTML = icon('add') + '<span>Create New Item</span>';
+    setIconWithLabel(createBtn, 'add', 'Create New Item');
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
     toolbar.appendChild(createBtn);
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    searchWrap.innerHTML = icon('search');
+    clearChildren(searchWrap);
+    var searchIcon = svgIcon('search');
+    if (searchIcon) searchWrap.appendChild(searchIcon);
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -362,7 +394,7 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    moreBtn.innerHTML = icon('more_horiz');
+    setIcon(moreBtn, 'more_horiz');
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -402,7 +434,7 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    backBtn.innerHTML = icon('arrow_back');
+    setIcon(backBtn, 'arrow_back');
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -430,14 +462,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    cancelBtn.innerHTML = icon('cancel') + '<span>Cancel Edit</span>';
+    setIconWithLabel(cancelBtn, 'cancel', 'Cancel Edit');
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
       type: 'submit',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    saveBtn.innerHTML = icon('save') + '<span>Save Record</span>';
+    setIconWithLabel(saveBtn, 'save', 'Save Record');
     var updateImgBtn = el('button', {
       type: 'button',
       className: 'btn btn-text',
@@ -465,14 +497,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    filterBtn.innerHTML = icon('filter') + '<span>Filter</span>';
+    setIconWithLabel(filterBtn, 'filter', 'Filter');
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
       type: 'button',
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    exportBtn.innerHTML = icon('export') + '<span>Export Summary</span>';
+    setIconWithLabel(exportBtn, 'export', 'Export Summary');
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
     toolbar.appendChild(filterBtn);
@@ -503,7 +535,7 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    reviewBtn.innerHTML = icon('review') + '<span>Review Stock</span>';
+    setIconWithLabel(reviewBtn, 'review', 'Review Stock');
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
     stockPanel.appendChild(hint);
