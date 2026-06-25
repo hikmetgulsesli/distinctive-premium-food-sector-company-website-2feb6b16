@@ -1,0 +1,659 @@
+[
+  {
+    "screenId": "718a4954045244f0bad20a884a3b1b6b",
+    "screenTitle": "Item Editor - Distinctive Premium Food Sector Company Website",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 119
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 120
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 121
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 240
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 241
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 242
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 124
+      },
+      {
+        "type": "button",
+        "label": "account_circle",
+        "line": 127
+      },
+      {
+        "type": "button",
+        "label": "arrow_back",
+        "line": 141
+      },
+      {
+        "type": "button",
+        "label": "Cancel Edit",
+        "line": 199
+      },
+      {
+        "type": "button",
+        "label": "Save Record",
+        "line": 200
+      },
+      {
+        "type": "button",
+        "label": "Update Image",
+        "line": 211
+      },
+      {
+        "type": "input",
+        "label": "e.g. Sourdough Boule",
+        "inputType": "text",
+        "placeholder": "e.g. Sourdough Boule",
+        "line": 154
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 159
+      },
+      {
+        "type": "input",
+        "label": "0.00",
+        "inputType": "number",
+        "placeholder": "0.00",
+        "line": 167
+      },
+      {
+        "type": "input",
+        "label": "Describe the flavor profile, ingredients, and crafting process...",
+        "inputType": "textarea",
+        "placeholder": "Describe the flavor profile, ingredients, and crafting process...",
+        "line": 175
+      },
+      {
+        "type": "input",
+        "label": "number",
+        "inputType": "number",
+        "line": 182
+      },
+      {
+        "type": "input",
+        "label": "checkbox",
+        "inputType": "checkbox",
+        "line": 192
+      },
+      {
+        "type": "form",
+        "label": "form",
+        "line": 149
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 119
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 120
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 121
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 240
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 241
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 242
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 124
+      },
+      {
+        "type": "button",
+        "label": "account_circle",
+        "line": 127
+      },
+      {
+        "type": "button",
+        "label": "arrow_back",
+        "line": 141
+      },
+      {
+        "type": "button",
+        "label": "Cancel Edit",
+        "line": 199
+      },
+      {
+        "type": "button",
+        "label": "Save Record",
+        "line": 200
+      },
+      {
+        "type": "button",
+        "label": "Update Image",
+        "line": 211
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "e.g. Sourdough Boule",
+        "inputType": "text",
+        "placeholder": "e.g. Sourdough Boule",
+        "line": 154
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 159
+      },
+      {
+        "type": "input",
+        "label": "0.00",
+        "inputType": "number",
+        "placeholder": "0.00",
+        "line": 167
+      },
+      {
+        "type": "input",
+        "label": "Describe the flavor profile, ingredients, and crafting process...",
+        "inputType": "textarea",
+        "placeholder": "Describe the flavor profile, ingredients, and crafting process...",
+        "line": 175
+      },
+      {
+        "type": "input",
+        "label": "number",
+        "inputType": "number",
+        "line": 182
+      },
+      {
+        "type": "input",
+        "label": "checkbox",
+        "inputType": "checkbox",
+        "line": 192
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 19,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "02c2feedc55b4527a5f27786a55544a3",
+    "screenTitle": "Item Operations - Distinctive Premium Food Sector Company Website",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "dashboard",
+        "href": "#",
+        "line": 202
+      },
+      {
+        "type": "link",
+        "label": "Inventory",
+        "href": "#",
+        "line": 208
+      },
+      {
+        "type": "link",
+        "label": "Schedule",
+        "href": "#",
+        "line": 214
+      },
+      {
+        "type": "link",
+        "label": "Clients",
+        "href": "#",
+        "line": 220
+      },
+      {
+        "type": "link",
+        "label": "settings",
+        "href": "#",
+        "line": 226
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 234
+      },
+      {
+        "type": "link",
+        "label": "logout",
+        "href": "#",
+        "line": 238
+      },
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 257
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 258
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 259
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 444
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 445
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 446
+      },
+      {
+        "type": "button",
+        "label": "Create New Item",
+        "line": 270
+      },
+      {
+        "type": "button",
+        "label": "RETRY LOAD",
+        "line": 387
+      },
+      {
+        "type": "button",
+        "label": "Edit Item",
+        "line": 429
+      },
+      {
+        "type": "button",
+        "label": "more_horiz",
+        "line": 430
+      },
+      {
+        "type": "input",
+        "label": "Search records...",
+        "inputType": "text",
+        "placeholder": "Search records...",
+        "line": 303
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 307
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 313
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "dashboard",
+        "href": "#",
+        "line": 202
+      },
+      {
+        "type": "link",
+        "label": "Inventory",
+        "href": "#",
+        "line": 208
+      },
+      {
+        "type": "link",
+        "label": "Schedule",
+        "href": "#",
+        "line": 214
+      },
+      {
+        "type": "link",
+        "label": "Clients",
+        "href": "#",
+        "line": 220
+      },
+      {
+        "type": "link",
+        "label": "settings",
+        "href": "#",
+        "line": 226
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 234
+      },
+      {
+        "type": "link",
+        "label": "logout",
+        "href": "#",
+        "line": 238
+      },
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 257
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 258
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 259
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 444
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 445
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 446
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Create New Item",
+        "line": 270
+      },
+      {
+        "type": "button",
+        "label": "RETRY LOAD",
+        "line": 387
+      },
+      {
+        "type": "button",
+        "label": "Edit Item",
+        "line": 429
+      },
+      {
+        "type": "button",
+        "label": "more_horiz",
+        "line": 430
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Search records...",
+        "inputType": "text",
+        "placeholder": "Search records...",
+        "line": 303
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 307
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 313
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 20,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "e75641c8cdaf4b8986de9c4470cb83c7",
+    "screenTitle": "Insights - Distinctive Premium Food Sector Company Website",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 125
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 126
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 127
+      },
+      {
+        "type": "link",
+        "label": "dashboard",
+        "href": "#",
+        "line": 142
+      },
+      {
+        "type": "link",
+        "label": "inventory_2",
+        "href": "#",
+        "line": 143
+      },
+      {
+        "type": "link",
+        "label": "insights",
+        "href": "#",
+        "line": 144
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 288
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 289
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 290
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 130
+      },
+      {
+        "type": "button",
+        "label": "account_circle",
+        "line": 133
+      },
+      {
+        "type": "button",
+        "label": "FILTER",
+        "line": 155
+      },
+      {
+        "type": "button",
+        "label": "EXPORT SUMMARY",
+        "line": 159
+      },
+      {
+        "type": "button",
+        "label": "REVIEW STOCK",
+        "line": 177
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Operations",
+        "href": "#",
+        "line": 125
+      },
+      {
+        "type": "link",
+        "label": "Editor",
+        "href": "#",
+        "line": 126
+      },
+      {
+        "type": "link",
+        "label": "Insights",
+        "href": "#",
+        "line": 127
+      },
+      {
+        "type": "link",
+        "label": "dashboard",
+        "href": "#",
+        "line": 142
+      },
+      {
+        "type": "link",
+        "label": "inventory_2",
+        "href": "#",
+        "line": 143
+      },
+      {
+        "type": "link",
+        "label": "insights",
+        "href": "#",
+        "line": 144
+      },
+      {
+        "type": "link",
+        "label": "Privacy Policy",
+        "href": "#",
+        "line": 288
+      },
+      {
+        "type": "link",
+        "label": "Terms of Service",
+        "href": "#",
+        "line": 289
+      },
+      {
+        "type": "link",
+        "label": "Inventory API",
+        "href": "#",
+        "line": 290
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 130
+      },
+      {
+        "type": "button",
+        "label": "account_circle",
+        "line": 133
+      },
+      {
+        "type": "button",
+        "label": "FILTER",
+        "line": 155
+      },
+      {
+        "type": "button",
+        "label": "EXPORT SUMMARY",
+        "line": 159
+      },
+      {
+        "type": "button",
+        "label": "REVIEW STOCK",
+        "line": 177
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 14,
+    "requiresRouter": false,
+    "requiresDragDrop": true
+  }
+]
