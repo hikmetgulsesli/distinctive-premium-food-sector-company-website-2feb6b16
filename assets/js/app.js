@@ -31,38 +31,8 @@
     check: '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
-  var svgParser = new DOMParser();
-  var svgCache = {};
-
-  function svgIcon(name) {
-    if (svgCache[name]) {
-      return svgCache[name].cloneNode(true);
-    }
-    var svgText = ICONS[name];
-    if (!svgText) return null;
-    var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
-    var svg = doc.documentElement;
-    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
-    var adopted = document.adoptNode(svg);
-    svgCache[name] = adopted;
-    return adopted.cloneNode(true);
-  }
-
-  function clearChildren(element) {
-    element.textContent = '';
-  }
-
-  function setIcon(element, name) {
-    clearChildren(element);
-    var svg = svgIcon(name);
-    if (svg) element.appendChild(svg);
-  }
-
-  function setIconWithLabel(element, name, label) {
-    clearChildren(element);
-    var svg = svgIcon(name);
-    if (svg) element.appendChild(svg);
-    element.appendChild(el('span', null, label));
+  function icon(name) {
+    return ICONS[name] || '';
   }
 
   function readFixtureData() {
@@ -144,7 +114,7 @@
 
   function render() {
     var s = state.getState();
-    clearChildren(root);
+    root.innerHTML = '';
     root.appendChild(buildShell(s));
   }
 
@@ -199,7 +169,7 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    setIcon(btn, iconName);
+    btn.innerHTML = icon(iconName);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -250,7 +220,7 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      setIconWithLabel(a, link.icon, link.label);
+      a.innerHTML = icon(link.icon) + '<span>' + escapeHtml(link.label) + '</span>';
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
@@ -282,7 +252,7 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    setIcon(close, 'cancel');
+    close.innerHTML = icon('cancel');
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -298,16 +268,14 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    setIconWithLabel(createBtn, 'add', 'Create New Item');
+    createBtn.innerHTML = icon('add') + '<span>Create New Item</span>';
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
     toolbar.appendChild(createBtn);
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    clearChildren(searchWrap);
-    var searchIcon = svgIcon('search');
-    if (searchIcon) searchWrap.appendChild(searchIcon);
+    searchWrap.innerHTML = icon('search');
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -376,7 +344,7 @@
     header.appendChild(badge);
 
     var meta = el('div', { className: 'record-meta' });
-    meta.textContent = item.category + ' · $' + formatPrice(item.price) + ' · Stock ' + formatStock(item.stock);
+    meta.textContent = item.category + ' · $' + item.price.toFixed(2) + ' · Stock ' + item.stock;
 
     var actions = el('div', { className: 'record-actions' });
     var editBtn = el('button', {
@@ -394,7 +362,7 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    setIcon(moreBtn, 'more_horiz');
+    moreBtn.innerHTML = icon('more_horiz');
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -417,9 +385,9 @@
       return panel;
     }
     panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
-      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + formatPrice(item.price) + '</p>' +
+      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + item.price.toFixed(2) + '</p>' +
       '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
-      '<p class="preview-stock">Stock: ' + formatStock(item.stock) + '</p>';
+      '<p class="preview-stock">Stock: ' + item.stock + '</p>';
     return panel;
   }
 
@@ -434,7 +402,7 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    setIcon(backBtn, 'arrow_back');
+    backBtn.innerHTML = icon('arrow_back');
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -462,14 +430,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    setIconWithLabel(cancelBtn, 'cancel', 'Cancel Edit');
+    cancelBtn.innerHTML = icon('cancel') + '<span>Cancel Edit</span>';
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
       type: 'submit',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    setIconWithLabel(saveBtn, 'save', 'Save Record');
+    saveBtn.innerHTML = icon('save') + '<span>Save Record</span>';
     var updateImgBtn = el('button', {
       type: 'button',
       className: 'btn btn-text',
@@ -497,14 +465,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    setIconWithLabel(filterBtn, 'filter', 'Filter');
+    filterBtn.innerHTML = icon('filter') + '<span>Filter</span>';
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
       type: 'button',
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    setIconWithLabel(exportBtn, 'export', 'Export Summary');
+    exportBtn.innerHTML = icon('export') + '<span>Export Summary</span>';
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
     toolbar.appendChild(filterBtn);
@@ -535,7 +503,7 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    setIconWithLabel(reviewBtn, 'review', 'Review Stock');
+    reviewBtn.innerHTML = icon('review') + '<span>Review Stock</span>';
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
     stockPanel.appendChild(hint);
@@ -668,20 +636,6 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
-  }
-
-  function formatPrice(value) {
-    if (value === null || value === undefined || value === '') return '0.00';
-    var num = Number(value);
-    if (isNaN(num)) return '0.00';
-    return num.toFixed(2);
-  }
-
-  function formatStock(value) {
-    if (value === null || value === undefined || value === '') return '0';
-    var num = Number(value);
-    if (isNaN(num)) return '0';
-    return String(num);
   }
 
   function escapeHtml(str) {
