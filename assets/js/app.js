@@ -31,29 +31,31 @@
     check: '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
+  function icon(name) {
+    return ICONS[name] || '';
+  }
+
+  var svgParser = new DOMParser();
   var svgCache = {};
 
-  function parseSvgIcon(name) {
+  function svgIcon(name) {
     if (svgCache[name]) {
       return svgCache[name].cloneNode(true);
     }
-    var markup = ICONS[name];
-    if (!markup) return null;
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(markup, 'image/svg+xml');
+    var svgText = ICONS[name];
+    if (!svgText) return null;
+    var doc = svgParser.parseFromString(svgText, 'text/html');
     var svg = doc.querySelector('svg');
     if (!svg) return null;
-    var imported = document.importNode(svg, true);
-    svgCache[name] = imported;
-    return imported.cloneNode(true);
+    var adopted = document.adoptNode(svg);
+    svgCache[name] = adopted;
+    return adopted.cloneNode(true);
   }
 
-  function icon(name) {
-    return parseSvgIcon(name);
-  }
-
-  function clearChildren(node) {
-    node.textContent = '';
+  function appendIcon(parent, name) {
+    var svg = svgIcon(name);
+    if (svg) parent.appendChild(svg);
+    return parent;
   }
 
   function readFixtureData() {
@@ -135,7 +137,9 @@
 
   function render() {
     var s = state.getState();
-    clearChildren(root);
+    while (root.firstChild) {
+      root.removeChild(root.firstChild);
+    }
     root.appendChild(buildShell(s));
   }
 
@@ -190,8 +194,7 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    var svg = icon(iconName);
-    if (svg) btn.appendChild(svg);
+    appendIcon(btn, iconName);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -242,8 +245,7 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      var linkIcon = icon(link.icon);
-      if (linkIcon) a.appendChild(linkIcon);
+      appendIcon(a, link.icon);
       a.appendChild(el('span', {}, link.label));
       a.addEventListener('click', function (e) {
         e.preventDefault();
@@ -276,8 +278,7 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    var closeIcon = icon('cancel');
-    if (closeIcon) close.appendChild(closeIcon);
+    appendIcon(close, 'cancel');
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -293,8 +294,7 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    var addIcon = icon('add');
-    if (addIcon) createBtn.appendChild(addIcon);
+    appendIcon(createBtn, 'add');
     createBtn.appendChild(el('span', {}, 'Create New Item'));
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
@@ -302,8 +302,7 @@
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    var searchIcon = icon('search');
-    if (searchIcon) searchWrap.appendChild(searchIcon);
+    appendIcon(searchWrap, 'search');
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -338,7 +337,7 @@
         state.actions.setCategoryFilter('All');
         state.actions.setStatusFilter('All');
       });
-      empty.innerHTML = '<p>No records match your filters.</p>';
+      empty.appendChild(el('p', {}, 'No records match your filters.'));
       empty.appendChild(retryBtn);
       list.appendChild(empty);
     } else {
@@ -390,8 +389,7 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    var moreIcon = icon('more_horiz');
-    if (moreIcon) moreBtn.appendChild(moreIcon);
+    appendIcon(moreBtn, 'more_horiz');
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -413,10 +411,10 @@
       panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
       return panel;
     }
-    panel.appendChild(el('h2', { className: 'preview-title' }, item.name || ''));
-    panel.appendChild(el('p', { className: 'preview-meta' }, (item.category || '') + ' · $' + formatPrice(item.price)));
-    panel.appendChild(el('p', { className: 'preview-description' }, item.description || ''));
-    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + formatStock(item.stock)));
+    panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
+    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + item.price.toFixed(2)));
+    panel.appendChild(el('p', { className: 'preview-description' }, item.description));
+    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + item.stock));
     return panel;
   }
 
@@ -431,8 +429,7 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    var backIcon = icon('arrow_back');
-    if (backIcon) backBtn.appendChild(backIcon);
+    appendIcon(backBtn, 'arrow_back');
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -460,8 +457,7 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    var cancelIcon = icon('cancel');
-    if (cancelIcon) cancelBtn.appendChild(cancelIcon);
+    appendIcon(cancelBtn, 'cancel');
     cancelBtn.appendChild(el('span', {}, 'Cancel Edit'));
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
@@ -469,8 +465,7 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    var saveIcon = icon('save');
-    if (saveIcon) saveBtn.appendChild(saveIcon);
+    appendIcon(saveBtn, 'save');
     saveBtn.appendChild(el('span', {}, 'Save Record'));
     var updateImgBtn = el('button', {
       type: 'button',
@@ -499,8 +494,7 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    var filterIcon = icon('filter');
-    if (filterIcon) filterBtn.appendChild(filterIcon);
+    appendIcon(filterBtn, 'filter');
     filterBtn.appendChild(el('span', {}, 'Filter'));
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
@@ -508,8 +502,7 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    var exportIcon = icon('export');
-    if (exportIcon) exportBtn.appendChild(exportIcon);
+    appendIcon(exportBtn, 'export');
     exportBtn.appendChild(el('span', {}, 'Export Summary'));
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
@@ -524,25 +517,24 @@
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
-    activityPanel.innerHTML = '<h2 class="panel-title">Recent Activity</h2>';
+    activityPanel.appendChild(el('h2', { className: 'panel-title' }, 'Recent Activity'));
     var activityList = el('ul', { className: 'activity-list' });
     (s.activity || []).forEach(function (evt) {
       var li = el('li', { className: 'activity-item' });
-      li.innerHTML = '<span class="activity-type">' + escapeHtml(evt.type) + '</span>' +
-        '<span class="activity-message">' + escapeHtml(evt.message) + '</span>';
+      li.appendChild(el('span', { className: 'activity-type' }, evt.type));
+      li.appendChild(el('span', { className: 'activity-message' }, evt.message));
       activityList.appendChild(li);
     });
     activityPanel.appendChild(activityList);
 
     var stockPanel = el('div', { className: 'insights-panel' });
-    stockPanel.innerHTML = '<h2 class="panel-title">Stock Follow-up</h2>';
+    stockPanel.appendChild(el('h2', { className: 'panel-title' }, 'Stock Follow-up'));
     var reviewBtn = el('button', {
       type: 'button',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    var reviewIcon = icon('review');
-    if (reviewIcon) reviewBtn.appendChild(reviewIcon);
+    appendIcon(reviewBtn, 'review');
     reviewBtn.appendChild(el('span', {}, 'Review Stock'));
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
@@ -686,16 +678,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
-  }
-
-  function formatPrice(price) {
-    if (price === undefined || price === null || isNaN(price)) return '0.00';
-    return Number(price).toFixed(2);
-  }
-
-  function formatStock(stock) {
-    if (stock === undefined || stock === null) return '0';
-    return String(stock);
   }
 
   if (document.readyState === 'loading') {
