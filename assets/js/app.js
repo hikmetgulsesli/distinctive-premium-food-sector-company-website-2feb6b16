@@ -48,9 +48,9 @@
     var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
     var svg = doc.documentElement;
     if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
-    var adopted = document.adoptNode(svg);
-    svgCache[name] = adopted;
-    return adopted.cloneNode(true);
+    var imported = document.importNode(svg, true);
+    svgCache[name] = imported;
+    return imported.cloneNode(true);
   }
 
   function appendIcon(parent, name) {
@@ -180,9 +180,7 @@
 
   function render() {
     var s = state.getState();
-    while (root.firstChild) {
-      root.removeChild(root.firstChild);
-    }
+    clearChildren(root);
     root.appendChild(buildShell(s));
   }
 
@@ -455,9 +453,12 @@
       panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
       return panel;
     }
-    panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
-    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + formatCurrency(item.price)));
-    panel.appendChild(el('p', { className: 'preview-description' }, item.description));
+    var name = item.name != null ? item.name : 'Unnamed Item';
+    var category = item.category != null ? item.category : 'Uncategorized';
+    var description = item.description != null ? item.description : '';
+    panel.appendChild(el('h2', { className: 'preview-title' }, name));
+    panel.appendChild(el('p', { className: 'preview-meta' }, category + ' · $' + formatCurrency(item.price)));
+    panel.appendChild(el('p', { className: 'preview-description' }, description));
     panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + formatStock(item.stock)));
     return panel;
   }
@@ -709,6 +710,12 @@
     wrap.appendChild(lbl);
     wrap.appendChild(select);
     return wrap;
+  }
+
+  function clearChildren(node) {
+    while (node.firstChild) {
+      node.removeChild(node.firstChild);
+    }
   }
 
   function el(tag, attrs, text) {
