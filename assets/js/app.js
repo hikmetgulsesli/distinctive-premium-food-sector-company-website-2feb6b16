@@ -344,7 +344,7 @@
     header.appendChild(badge);
 
     var meta = el('div', { className: 'record-meta' });
-    meta.textContent = item.category + ' · $' + formatPrice(item.price) + ' · Stock ' + formatStock(item.stock);
+    meta.textContent = item.category + ' · $' + item.price.toFixed(2) + ' · Stock ' + item.stock;
 
     var actions = el('div', { className: 'record-actions' });
     var editBtn = el('button', {
@@ -385,9 +385,9 @@
       return panel;
     }
     panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
-      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + formatPrice(item.price) + '</p>' +
+      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + item.price.toFixed(2) + '</p>' +
       '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
-      '<p class="preview-stock">Stock: ' + formatStock(item.stock) + '</p>';
+      '<p class="preview-stock">Stock: ' + item.stock + '</p>';
     return panel;
   }
 
@@ -636,20 +636,6 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
-  }
-
-  function formatPrice(value) {
-    if (value === null || value === undefined || value === '') return '0.00';
-    var num = Number(value);
-    if (isNaN(num)) return '0.00';
-    return num.toFixed(2);
-  }
-
-  function formatStock(value) {
-    if (value === null || value === undefined || value === '') return '0';
-    var num = Number(value);
-    if (isNaN(num)) return '0';
-    return String(num);
   }
 
   function escapeHtml(str) {
