@@ -4,6 +4,7 @@
   var state;
   var root;
   var unsubscribe;
+  var insightsFilter = 'all';
 
   var SURFACES = {
     OPERATIONS: 'SURF_ITEM_OPERATIONS',
@@ -56,6 +57,35 @@
     var svg = svgIcon(name);
     if (svg) parent.appendChild(svg);
     return parent;
+  }
+
+  function filterInsightsItems(items, key) {
+    switch (key) {
+      case 'bakery':
+        return items.filter(function (i) { return i.category === 'Bakery'; });
+      case 'catering':
+        return items.filter(function (i) { return i.category === 'Catering'; });
+      case 'out-of-stock':
+        return items.filter(function (i) { return i.status === 'out_of_stock'; });
+      case 'featured':
+        return items.filter(function (i) { return i.featured; });
+      default:
+        return items.slice();
+    }
+  }
+
+  function getInsightsCounts(items) {
+    return {
+      total: items.length,
+      active: items.filter(function (i) { return i.status === 'active'; }).length,
+      outOfStock: items.filter(function (i) { return i.status === 'out_of_stock'; }).length,
+      featured: items.filter(function (i) { return i.featured; }).length
+    };
+  }
+
+  function setInsightsFilter(key) {
+    insightsFilter = key || 'all';
+    render();
   }
 
   function readFixtureData() {
@@ -122,6 +152,8 @@
       state: state.getState,
       actions: state.actions,
       filteredItems: state.filteredItems,
+      activeFilter: function () { return insightsFilter; },
+      setInsightsFilter: setInsightsFilter,
       version: '1.0.0',
       ready: true
     };
@@ -264,7 +296,8 @@
     var footer = el('footer', { className: 'app-footer' });
     var links = el('div', { className: 'app-footer-links' });
     ['Privacy Policy', 'Terms of Service', 'Inventory API'].forEach(function (label) {
-      var a = el('a', { href: '#', className: 'app-footer-link' }, label);
+      var actionId = 'ACT_' + label.toUpperCase().replace(/\s/g, '_').replace(/'/g, '').replace(/-/g, '_');
+      var a = el('a', { href: '#', className: 'app-footer-link', 'data-action-id': actionId }, label);
       a.addEventListener('click', function (e) { e.preventDefault(); });
       links.appendChild(a);
     });
@@ -509,11 +542,25 @@
     toolbar.appendChild(filterBtn);
     toolbar.appendChild(exportBtn);
 
+    if (insightsFilter !== 'all') {
+      var filterLabels = {
+        bakery: 'Bakery',
+        catering: 'Catering',
+        'out-of-stock': 'Out of Stock',
+        featured: 'Featured'
+      };
+      var badge = el('span', { className: 'insights-active-filter' }, 'Filtered: ' + (filterLabels[insightsFilter] || insightsFilter));
+      badge.style.cssText = 'margin-left:auto; padding:6px 12px; background:rgba(217, 123, 84, 0.12); color:#974725; border-radius:4px; font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;';
+      toolbar.appendChild(badge);
+    }
+
+    var filtered = filterInsightsItems(s.items || [], insightsFilter);
+    var counts = getInsightsCounts(filtered);
     var metrics = el('div', { className: 'metrics-row' });
-    metrics.appendChild(buildMetricCard('Total Items', s.counts.total));
-    metrics.appendChild(buildMetricCard('Active', s.counts.active));
-    metrics.appendChild(buildMetricCard('Out of Stock', s.counts.outOfStock));
-    metrics.appendChild(buildMetricCard('Featured', s.counts.featured));
+    metrics.appendChild(buildMetricCard('Total Items', counts.total));
+    metrics.appendChild(buildMetricCard('Active', counts.active));
+    metrics.appendChild(buildMetricCard('Out of Stock', counts.outOfStock));
+    metrics.appendChild(buildMetricCard('Featured', counts.featured));
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
@@ -668,16 +715,6 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
-  }
-
-  function escapeHtml(str) {
-    if (str === null || str === undefined) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
   }
 
   if (document.readyState === 'loading') {
