@@ -144,7 +144,7 @@
         'margin-left: auto',
         'padding: 6px 12px',
         'background: rgba(217, 123, 84, 0.12)',
-        'color: #974725',
+        'color: #4a2010',
         'border-radius: 4px',
         'font-size: 12px',
         'font-weight: 700',
