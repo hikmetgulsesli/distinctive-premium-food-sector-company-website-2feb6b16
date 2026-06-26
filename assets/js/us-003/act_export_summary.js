@@ -53,7 +53,10 @@
   function buildSummary(state) {
     var items = state.items || [];
     var counts = state.counts || {};
-    var activeFilter = state.activeFilter || 'all';
+    var activeFilter = 'all';
+    if (global.app && typeof global.app.activeFilter === 'function') {
+      activeFilter = global.app.activeFilter();
+    }
 
     return {
       exportedAt: new Date().toISOString(),

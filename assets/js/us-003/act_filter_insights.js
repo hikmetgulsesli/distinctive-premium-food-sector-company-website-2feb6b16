@@ -160,9 +160,13 @@
     var items = state.items || [];
     var filtered = filterItems(items, key);
 
-    var surface = document.querySelector('[data-surface-id="SURF_INSIGHTS"]');
-    if (surface) {
-      updateMetrics(surface, filtered, key);
+    if (global.app && typeof global.app.setInsightsFilter === 'function') {
+      global.app.setInsightsFilter(key);
+    } else {
+      var surface = document.querySelector('[data-surface-id="SURF_INSIGHTS"]');
+      if (surface) {
+        updateMetrics(surface, filtered, key);
+      }
     }
 
     return { ok: true, filter: key, count: filtered.length };
