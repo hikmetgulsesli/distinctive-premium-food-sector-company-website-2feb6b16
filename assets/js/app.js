@@ -114,7 +114,7 @@
 
   function render() {
     var s = state.getState();
-    clearNode(root);
+    clearChildren(root);
     root.appendChild(buildShell(s));
   }
 
@@ -169,7 +169,7 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    appendIcon(btn, iconName);
+    btn.innerHTML = icon(iconName);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -220,8 +220,7 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      appendIcon(a, link.icon);
-      a.appendChild(el('span', {}, link.label));
+      a.innerHTML = icon(link.icon) + '<span>' + escapeHtml(link.label) + '</span>';
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
@@ -253,7 +252,7 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    appendIcon(close, 'cancel');
+    close.innerHTML = icon('cancel');
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -269,15 +268,14 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    appendIcon(createBtn, 'add');
-    createBtn.appendChild(el('span', {}, 'Create New Item'));
+    createBtn.innerHTML = icon('add') + '<span>Create New Item</span>';
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
     toolbar.appendChild(createBtn);
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    appendIcon(searchWrap, 'search');
+    searchWrap.innerHTML = icon('search');
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -312,7 +310,7 @@
         state.actions.setCategoryFilter('All');
         state.actions.setStatusFilter('All');
       });
-      empty.appendChild(el('p', {}, 'No records match your filters.'));
+      empty.innerHTML = '<p>No records match your filters.</p>';
       empty.appendChild(retryBtn);
       list.appendChild(empty);
     } else {
@@ -364,7 +362,7 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    appendIcon(moreBtn, 'more_horiz');
+    moreBtn.innerHTML = icon('more_horiz');
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -383,13 +381,13 @@
   function buildPreview(item) {
     var panel = el('div', { className: 'item-preview' });
     if (!item) {
-      panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
+      panel.innerHTML = '<p class="empty-preview">Select an item to preview details.</p>';
       return panel;
     }
-    panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
-    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + item.price.toFixed(2)));
-    panel.appendChild(el('p', { className: 'preview-description' }, item.description));
-    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + item.stock));
+    panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
+      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + item.price.toFixed(2) + '</p>' +
+      '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
+      '<p class="preview-stock">Stock: ' + item.stock + '</p>';
     return panel;
   }
 
@@ -404,7 +402,7 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    appendIcon(backBtn, 'arrow_back');
+    backBtn.innerHTML = icon('arrow_back');
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -432,16 +430,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    appendIcon(cancelBtn, 'cancel');
-    cancelBtn.appendChild(el('span', {}, 'Cancel Edit'));
+    cancelBtn.innerHTML = icon('cancel') + '<span>Cancel Edit</span>';
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
       type: 'submit',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    appendIcon(saveBtn, 'save');
-    saveBtn.appendChild(el('span', {}, 'Save Record'));
+    saveBtn.innerHTML = icon('save') + '<span>Save Record</span>';
     var updateImgBtn = el('button', {
       type: 'button',
       className: 'btn btn-text',
@@ -469,16 +465,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    appendIcon(filterBtn, 'filter');
-    filterBtn.appendChild(el('span', {}, 'Filter'));
+    filterBtn.innerHTML = icon('filter') + '<span>Filter</span>';
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
       type: 'button',
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    appendIcon(exportBtn, 'export');
-    exportBtn.appendChild(el('span', {}, 'Export Summary'));
+    exportBtn.innerHTML = icon('export') + '<span>Export Summary</span>';
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
     toolbar.appendChild(filterBtn);
@@ -492,25 +486,24 @@
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
-    activityPanel.appendChild(el('h2', { className: 'panel-title' }, 'Recent Activity'));
+    activityPanel.innerHTML = '<h2 class="panel-title">Recent Activity</h2>';
     var activityList = el('ul', { className: 'activity-list' });
     (s.activity || []).forEach(function (evt) {
       var li = el('li', { className: 'activity-item' });
-      li.appendChild(el('span', { className: 'activity-type' }, evt.type));
-      li.appendChild(el('span', { className: 'activity-message' }, evt.message));
+      li.innerHTML = '<span class="activity-type">' + escapeHtml(evt.type) + '</span>' +
+        '<span class="activity-message">' + escapeHtml(evt.message) + '</span>';
       activityList.appendChild(li);
     });
     activityPanel.appendChild(activityList);
 
     var stockPanel = el('div', { className: 'insights-panel' });
-    stockPanel.appendChild(el('h2', { className: 'panel-title' }, 'Stock Follow-up'));
+    stockPanel.innerHTML = '<h2 class="panel-title">Stock Follow-up</h2>';
     var reviewBtn = el('button', {
       type: 'button',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    appendIcon(reviewBtn, 'review');
-    reviewBtn.appendChild(el('span', {}, 'Review Stock'));
+    reviewBtn.innerHTML = icon('review') + '<span>Review Stock</span>';
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
     stockPanel.appendChild(hint);
@@ -645,30 +638,9 @@
     return element;
   }
 
-
-  var svgParser = new DOMParser();
-  var svgCache = {};
-
-  function appendIcon(parent, name) {
-    var svgText = ICONS[name];
-    if (!svgText) return;
-    var cached = svgCache[name];
-    var svg;
-    if (cached) {
-      svg = cached.cloneNode(true);
-    } else {
-      var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
-      svg = doc.documentElement;
-      if (!svg || svg.nodeName.toLowerCase() !== 'svg') return;
-      svg = document.adoptNode(svg);
-      svgCache[name] = svg;
-    }
-    parent.appendChild(svg);
-  }
-
-  function clearNode(node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
+  function clearChildren(node) {
+    if (node) {
+      node.textContent = '';
     }
   }
 
