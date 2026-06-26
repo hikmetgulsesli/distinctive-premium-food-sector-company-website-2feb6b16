@@ -45,9 +45,9 @@
     }
     var svgText = ICONS[name];
     if (!svgText) return null;
-    var doc = svgParser.parseFromString(svgText, 'text/html');
-    var svg = doc.querySelector('svg');
-    if (!svg) return null;
+    var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
+    var svg = doc.documentElement;
+    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
     var adopted = document.adoptNode(svg);
     svgCache[name] = adopted;
     return adopted.cloneNode(true);
@@ -57,6 +57,17 @@
     var svg = svgIcon(name);
     if (svg) parent.appendChild(svg);
     return parent;
+  }
+
+  function formatCurrency(value) {
+    if (value === '' || value === null || value === undefined || isNaN(Number(value))) {
+      return Number(0).toFixed(2);
+    }
+    return Number(value).toFixed(2);
+  }
+
+  function formatStock(value) {
+    return value === undefined || value === null ? 0 : value;
   }
 
   function filterInsightsItems(items, key) {
@@ -404,7 +415,7 @@
     header.appendChild(badge);
 
     var meta = el('div', { className: 'record-meta' });
-    meta.textContent = item.category + ' · $' + item.price.toFixed(2) + ' · Stock ' + item.stock;
+    meta.textContent = item.category + ' · $' + formatCurrency(item.price) + ' · Stock ' + formatStock(item.stock);
 
     var actions = el('div', { className: 'record-actions' });
     var editBtn = el('button', {
@@ -445,9 +456,9 @@
       return panel;
     }
     panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
-    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + item.price.toFixed(2)));
+    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + formatCurrency(item.price)));
     panel.appendChild(el('p', { className: 'preview-description' }, item.description));
-    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + item.stock));
+    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + formatStock(item.stock)));
     return panel;
   }
 
