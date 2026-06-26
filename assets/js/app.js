@@ -4,7 +4,6 @@
   var state;
   var root;
   var unsubscribe;
-  var insightsFilter = 'all';
 
   var SURFACES = {
     OPERATIONS: 'SURF_ITEM_OPERATIONS',
@@ -34,69 +33,6 @@
 
   function icon(name) {
     return ICONS[name] || '';
-  }
-
-  var svgParser = new DOMParser();
-  var svgCache = {};
-
-  function svgIcon(name) {
-    if (svgCache[name]) {
-      return svgCache[name].cloneNode(true);
-    }
-    var svgText = ICONS[name];
-    if (!svgText) return null;
-    var doc = svgParser.parseFromString(svgText, 'image/svg+xml');
-    var svg = doc.documentElement;
-    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
-    var adopted = document.adoptNode(svg);
-    svgCache[name] = adopted;
-    return adopted.cloneNode(true);
-  }
-
-  function appendIcon(parent, name) {
-    var svg = svgIcon(name);
-    if (svg) parent.appendChild(svg);
-    return parent;
-  }
-
-  function formatCurrency(value) {
-    if (value === '' || value === null || value === undefined || isNaN(Number(value))) {
-      return Number(0).toFixed(2);
-    }
-    return Number(value).toFixed(2);
-  }
-
-  function formatStock(value) {
-    return value === undefined || value === null ? 0 : value;
-  }
-
-  function filterInsightsItems(items, key) {
-    switch (key) {
-      case 'bakery':
-        return items.filter(function (i) { return i.category === 'Bakery'; });
-      case 'catering':
-        return items.filter(function (i) { return i.category === 'Catering'; });
-      case 'out-of-stock':
-        return items.filter(function (i) { return i.status === 'out_of_stock'; });
-      case 'featured':
-        return items.filter(function (i) { return i.featured; });
-      default:
-        return items.slice();
-    }
-  }
-
-  function getInsightsCounts(items) {
-    return {
-      total: items.length,
-      active: items.filter(function (i) { return i.status === 'active'; }).length,
-      outOfStock: items.filter(function (i) { return i.status === 'out_of_stock'; }).length,
-      featured: items.filter(function (i) { return i.featured; }).length
-    };
-  }
-
-  function setInsightsFilter(key) {
-    insightsFilter = key || 'all';
-    render();
   }
 
   function readFixtureData() {
@@ -163,8 +99,6 @@
       state: state.getState,
       actions: state.actions,
       filteredItems: state.filteredItems,
-      activeFilter: function () { return insightsFilter; },
-      setInsightsFilter: setInsightsFilter,
       version: '1.0.0',
       ready: true
     };
@@ -180,9 +114,7 @@
 
   function render() {
     var s = state.getState();
-    while (root.firstChild) {
-      root.removeChild(root.firstChild);
-    }
+    root.innerHTML = '';
     root.appendChild(buildShell(s));
   }
 
@@ -237,7 +169,7 @@
       'aria-label': ariaLabel,
       'data-action-id': actionId || ''
     });
-    appendIcon(btn, iconName);
+    btn.innerHTML = icon(iconName);
     btn.addEventListener('click', function () {
       state.actions.setActivePanel('notifications');
     });
@@ -288,8 +220,7 @@
         href: '#',
         'data-action-id': 'ACT_SIDEBAR_' + link.label.toUpperCase().replace(/\s/g, '_')
       });
-      appendIcon(a, link.icon);
-      a.appendChild(el('span', {}, link.label));
+      a.innerHTML = icon(link.icon) + '<span>' + escapeHtml(link.label) + '</span>';
       a.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.surface && link.surface !== s.activeSurface) {
@@ -307,8 +238,7 @@
     var footer = el('footer', { className: 'app-footer' });
     var links = el('div', { className: 'app-footer-links' });
     ['Privacy Policy', 'Terms of Service', 'Inventory API'].forEach(function (label) {
-      var actionId = 'ACT_' + label.toUpperCase().replace(/\s/g, '_').replace(/'/g, '').replace(/-/g, '_');
-      var a = el('a', { href: '#', className: 'app-footer-link', 'data-action-id': actionId }, label);
+      var a = el('a', { href: '#', className: 'app-footer-link' }, label);
       a.addEventListener('click', function (e) { e.preventDefault(); });
       links.appendChild(a);
     });
@@ -322,7 +252,7 @@
     var banner = el('div', { className: 'app-error-banner', role: 'alert' });
     banner.textContent = message;
     var close = el('button', { type: 'button', className: 'app-error-close', 'aria-label': 'Dismiss' });
-    appendIcon(close, 'cancel');
+    close.innerHTML = icon('cancel');
     close.addEventListener('click', function () { state.actions.clearError(); });
     banner.appendChild(close);
     return banner;
@@ -338,15 +268,14 @@
       className: 'btn btn-primary',
       'data-action-id': 'ACT_CREATE_RECORD'
     });
-    appendIcon(createBtn, 'add');
-    createBtn.appendChild(el('span', {}, 'Create New Item'));
+    createBtn.innerHTML = icon('add') + '<span>Create New Item</span>';
     createBtn.addEventListener('click', function () { state.actions.createNewItem(); });
     toolbar.appendChild(title);
     toolbar.appendChild(createBtn);
 
     var filters = el('div', { className: 'filters-row' });
     var searchWrap = el('label', { className: 'search-field' });
-    appendIcon(searchWrap, 'search');
+    searchWrap.innerHTML = icon('search');
     var searchInput = el('input', {
       type: 'text',
       placeholder: 'Search records...',
@@ -381,7 +310,7 @@
         state.actions.setCategoryFilter('All');
         state.actions.setStatusFilter('All');
       });
-      empty.appendChild(el('p', {}, 'No records match your filters.'));
+      empty.innerHTML = '<p>No records match your filters.</p>';
       empty.appendChild(retryBtn);
       list.appendChild(empty);
     } else {
@@ -415,7 +344,7 @@
     header.appendChild(badge);
 
     var meta = el('div', { className: 'record-meta' });
-    meta.textContent = item.category + ' · $' + formatCurrency(item.price) + ' · Stock ' + formatStock(item.stock);
+    meta.textContent = item.category + ' · $' + formatPrice(item.price) + ' · Stock ' + formatStock(item.stock);
 
     var actions = el('div', { className: 'record-actions' });
     var editBtn = el('button', {
@@ -433,7 +362,7 @@
       'aria-label': 'More options',
       'data-action-id': 'ACT_MORE_OPTIONS'
     });
-    appendIcon(moreBtn, 'more_horiz');
+    moreBtn.innerHTML = icon('more_horiz');
     moreBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       state.actions.deleteItem(item.id);
@@ -452,13 +381,13 @@
   function buildPreview(item) {
     var panel = el('div', { className: 'item-preview' });
     if (!item) {
-      panel.appendChild(el('p', { className: 'empty-preview' }, 'Select an item to preview details.'));
+      panel.innerHTML = '<p class="empty-preview">Select an item to preview details.</p>';
       return panel;
     }
-    panel.appendChild(el('h2', { className: 'preview-title' }, item.name));
-    panel.appendChild(el('p', { className: 'preview-meta' }, item.category + ' · $' + formatCurrency(item.price)));
-    panel.appendChild(el('p', { className: 'preview-description' }, item.description));
-    panel.appendChild(el('p', { className: 'preview-stock' }, 'Stock: ' + formatStock(item.stock)));
+    panel.innerHTML = '<h2 class="preview-title">' + escapeHtml(item.name) + '</h2>' +
+      '<p class="preview-meta">' + escapeHtml(item.category) + ' · $' + formatPrice(item.price) + '</p>' +
+      '<p class="preview-description">' + escapeHtml(item.description) + '</p>' +
+      '<p class="preview-stock">Stock: ' + formatStock(item.stock) + '</p>';
     return panel;
   }
 
@@ -473,7 +402,7 @@
       'aria-label': 'Back',
       'data-action-id': 'ACT_BACK_TO_OPERATIONS'
     });
-    appendIcon(backBtn, 'arrow_back');
+    backBtn.innerHTML = icon('arrow_back');
     backBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var title = el('h1', { className: 'surface-title' }, s.editingItem && s.editingItem.name ? 'Edit Item' : 'Create Item');
     header.appendChild(backBtn);
@@ -501,16 +430,14 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_CANCEL_EDIT'
     });
-    appendIcon(cancelBtn, 'cancel');
-    cancelBtn.appendChild(el('span', {}, 'Cancel Edit'));
+    cancelBtn.innerHTML = icon('cancel') + '<span>Cancel Edit</span>';
     cancelBtn.addEventListener('click', function () { state.actions.cancelEdit(); });
     var saveBtn = el('button', {
       type: 'submit',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_SAVE_RECORD'
     });
-    appendIcon(saveBtn, 'save');
-    saveBtn.appendChild(el('span', {}, 'Save Record'));
+    saveBtn.innerHTML = icon('save') + '<span>Save Record</span>';
     var updateImgBtn = el('button', {
       type: 'button',
       className: 'btn btn-text',
@@ -538,62 +465,45 @@
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_FILTER_INSIGHTS'
     });
-    appendIcon(filterBtn, 'filter');
-    filterBtn.appendChild(el('span', {}, 'Filter'));
+    filterBtn.innerHTML = icon('filter') + '<span>Filter</span>';
     filterBtn.addEventListener('click', function () { state.actions.setActivePanel('filter'); });
     var exportBtn = el('button', {
       type: 'button',
       className: 'btn btn-secondary',
       'data-action-id': 'ACT_EXPORT_SUMMARY'
     });
-    appendIcon(exportBtn, 'export');
-    exportBtn.appendChild(el('span', {}, 'Export Summary'));
+    exportBtn.innerHTML = icon('export') + '<span>Export Summary</span>';
     exportBtn.addEventListener('click', function () { alert('Summary exported to console.'); console.log(state.getState()); });
     toolbar.appendChild(title);
     toolbar.appendChild(filterBtn);
     toolbar.appendChild(exportBtn);
 
-    if (insightsFilter !== 'all') {
-      var filterLabels = {
-        bakery: 'Bakery',
-        catering: 'Catering',
-        'out-of-stock': 'Out of Stock',
-        featured: 'Featured'
-      };
-      var badge = el('span', { className: 'insights-active-filter' }, 'Filtered: ' + (filterLabels[insightsFilter] || insightsFilter));
-      badge.style.cssText = 'margin-left:auto; padding:6px 12px; background:rgba(217, 123, 84, 0.12); color:#974725; border-radius:4px; font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;';
-      toolbar.appendChild(badge);
-    }
-
-    var filtered = filterInsightsItems(s.items || [], insightsFilter);
-    var counts = getInsightsCounts(filtered);
     var metrics = el('div', { className: 'metrics-row' });
-    metrics.appendChild(buildMetricCard('Total Items', counts.total));
-    metrics.appendChild(buildMetricCard('Active', counts.active));
-    metrics.appendChild(buildMetricCard('Out of Stock', counts.outOfStock));
-    metrics.appendChild(buildMetricCard('Featured', counts.featured));
+    metrics.appendChild(buildMetricCard('Total Items', s.counts.total));
+    metrics.appendChild(buildMetricCard('Active', s.counts.active));
+    metrics.appendChild(buildMetricCard('Out of Stock', s.counts.outOfStock));
+    metrics.appendChild(buildMetricCard('Featured', s.counts.featured));
 
     var lower = el('div', { className: 'insights-content' });
     var activityPanel = el('div', { className: 'insights-panel' });
-    activityPanel.appendChild(el('h2', { className: 'panel-title' }, 'Recent Activity'));
+    activityPanel.innerHTML = '<h2 class="panel-title">Recent Activity</h2>';
     var activityList = el('ul', { className: 'activity-list' });
     (s.activity || []).forEach(function (evt) {
       var li = el('li', { className: 'activity-item' });
-      li.appendChild(el('span', { className: 'activity-type' }, evt.type));
-      li.appendChild(el('span', { className: 'activity-message' }, evt.message));
+      li.innerHTML = '<span class="activity-type">' + escapeHtml(evt.type) + '</span>' +
+        '<span class="activity-message">' + escapeHtml(evt.message) + '</span>';
       activityList.appendChild(li);
     });
     activityPanel.appendChild(activityList);
 
     var stockPanel = el('div', { className: 'insights-panel' });
-    stockPanel.appendChild(el('h2', { className: 'panel-title' }, 'Stock Follow-up'));
+    stockPanel.innerHTML = '<h2 class="panel-title">Stock Follow-up</h2>';
     var reviewBtn = el('button', {
       type: 'button',
       className: 'btn btn-primary',
       'data-action-id': 'ACT_REVIEW_STOCK'
     });
-    appendIcon(reviewBtn, 'review');
-    reviewBtn.appendChild(el('span', {}, 'Review Stock'));
+    reviewBtn.innerHTML = icon('review') + '<span>Review Stock</span>';
     reviewBtn.addEventListener('click', function () { state.actions.setSurface(SURFACES.OPERATIONS); });
     var hint = el('p', { className: 'insights-hint' }, 'Items with zero stock need attention.');
     stockPanel.appendChild(hint);
@@ -726,6 +636,36 @@
     }
     if (text !== undefined) element.textContent = text;
     return element;
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function clearChildren(node) {
+    if (node) {
+      node.textContent = '';
+    }
+  }
+
+  function formatPrice(value) {
+    if (value === null || value === undefined || value === '') return '0.00';
+    var num = Number(value);
+    if (isNaN(num)) return '0.00';
+    return num.toFixed(2);
+  }
+
+  function formatStock(value) {
+    if (value === null || value === undefined || value === '') return '0';
+    var num = Number(value);
+    if (isNaN(num)) return '0';
+    return String(Math.floor(num));
   }
 
   if (document.readyState === 'loading') {
